@@ -17,11 +17,15 @@ let sign x = if x >= 0 then 1 else -1
     @param b natural number you divide by.
  *)
 let quot a b = 
-    if b = 0 then failwith "Division by zero"
-    else
-        let res = a / b in
-        if a >= 0 || a mod b = 0 then res
-        else res - 1
+	let rec aux a b s =
+		if s = 1 then 
+			if a >= b then 1 + (aux (a - b) b s) 
+			else 0
+		else 
+			if a < 0 then (aux (a + b) b s) - 1
+			else 0
+	in if b = 0 then failwith "Division by zero"
+    else aux a b (sign a)
 
 (** Quotient of two integers. Fully Recursive.
     General case ; explicit by-hand computations. Not efficient enough as

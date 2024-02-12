@@ -6,7 +6,9 @@ open Builtin
     @param a non-zero integer
     @param b non-zero integer
 *)
-let rec gcd a b = 0
+let rec gcd a b = match (a,b) with
+	| (a, 0) -> abs a
+	| (a, b) -> gcd b (a mod b)
 
 (** Extended euclidean division of two integers NOT OCAML DEFAULT.
     Given non-zero entries a b computes triple (u, v, d) such that
