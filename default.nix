@@ -9,6 +9,7 @@ pkgs.mkShell {
 		ocamlPackages.junit
 		ocamlPackages.junit_alcotest
 		ocamlPackages.zarith
+		ocamlPackages.utop
 
 		## Lsp
 		ocamlPackages.merlin
