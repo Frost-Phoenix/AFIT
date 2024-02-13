@@ -17,15 +17,23 @@ let sign x = if x >= 0 then 1 else -1
     @param b natural number you divide by.
  *)
 let quot a b = 
-	let rec aux a b s =
-		if s = 1 then 
-			if a >= b then 1 + (aux (a - b) b s) 
-			else 0
+	let rec aux a b s1 s2 =
+		if s1 >= 1 then 
+			if s2 >= 0 then (* + / + *)
+				if a >= b then 1 + (aux (a - b) b s1 s2) 
+				else 0
+			else 			(* + / - *)
+				if a >= 0 then (aux (a + b) b s1 s2) - 1
+				else 1
 		else 
-			if a < 0 then (aux (a + b) b s) - 1
-			else 0
+			if s2 >= 0 then (* - / + *)
+				if a < 0 then (aux (a + b) b s1 s2) - 1
+				else 0
+			else			(* - / - *)
+				if a <= 0 then 1 + (aux (a - b) b s1 s2)
+ 				else -1 
 	in if b = 0 then failwith "Division by zero"
-    else aux a b (sign a)
+    else aux a b (sign a) (sign b)
 
 (** Quotient of two integers. Fully Recursive.
     General case ; explicit by-hand computations. Not efficient enough as
