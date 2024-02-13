@@ -16,4 +16,11 @@ let rec gcd a b = match (a,b) with
     @param a non-zero integer
     @param b non-zero integer.
 *)
-let bezout a b = (0, 0, 0)
+let bezout a b = 
+    let rec aux x y =
+        if x = 0 then (0, 1, y)
+        else 
+            let (u, v, d) = aux (y mod x) x in 
+            (v - (y/x) * u, u, d)
+    in aux a b
+
