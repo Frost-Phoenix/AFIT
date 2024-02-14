@@ -6,7 +6,14 @@ open Basic_arithmetics
 (** List composed of 2 and then odd integers starting at 3.
     @param n limit of list of odd integers, minimum value is 2.
  *)
-let init_eratosthenes n = []
+let init_eratosthenes n = 
+	let rec aux = function
+		| i when i > n -> []
+		| i when i = n -> [i]
+		| i -> i::(aux (i+2))
+	in match n with
+		| 2 -> [2]
+		| _ -> 2::(aux 3)
 
 (** Eratosthene sieve.
     @param n limit of list of primes, starting at 2.
