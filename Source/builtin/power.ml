@@ -49,8 +49,7 @@ let mod_power x n m =
     @param n exponent
     @param p prime modular base
  *)
-let prime_mod_power x n p = 0
-
+let prime_mod_power x n p = mod_power x n p
 
 
 
