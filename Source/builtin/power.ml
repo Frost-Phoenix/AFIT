@@ -31,7 +31,17 @@ let power x n =
     @param n exponent
     @param m modular base
  *)
-let mod_power x n m = 0
+let mod_power x n m = 
+	let rec aux = function 
+		| (_, e) when e*e > n -> 1
+		| (a, e) ->
+			let keep = (n lsr e) land 1 = 1
+			and nb = (a * a) mod m in
+				if keep then (a * aux(nb, e+1)) mod m
+				else aux(nb, e+1)
+	in
+		if x >= 0 then aux(x mod m, 0) mod m
+		else aux(m + (x mod m), 0)
 
 (** Fast modular exponentiation function mod prime. Logarithmic complexity.
     It makes use of the Little Fermat Theorem.
@@ -40,3 +50,22 @@ let mod_power x n m = 0
     @param p prime modular base
  *)
 let prime_mod_power x n p = 0
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
