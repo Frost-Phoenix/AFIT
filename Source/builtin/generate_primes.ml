@@ -18,7 +18,17 @@ let init_eratosthenes n =
 (** Eratosthene sieve.
     @param n limit of list of primes, starting at 2.
 *)
-let eratosthenes n = []
+let eratosthenes n = 
+	let l = init_eratosthenes n 
+	in let rec remove_multiples nb = function
+		| [] -> []
+		| e::q -> 
+			if e mod nb = 0 then remove_multiples nb q
+			else e::(remove_multiples nb q)
+	in let rec aux = function
+		| [] -> []
+		| e::q -> e::(aux (remove_multiples e q))
+	in aux l
 
 (** Write a list into a file. Element seperator is newline.
     @param file path to write to.
