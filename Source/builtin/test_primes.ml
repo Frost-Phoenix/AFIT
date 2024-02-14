@@ -24,4 +24,8 @@ let is_prime n =
     @param p tested integer
     @param testSeq sequence of integers against which to test
  *)
-let is_pseudo_prime p test_seq = true
+let is_pseudo_prime p test_seq =
+	let rec aux = function 
+		| [] -> true
+		| e::q -> (mod_power e p p) = e mod p && aux q
+	in aux test_seq 
