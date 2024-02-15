@@ -33,14 +33,25 @@ let eratosthenes n =
 (** Write a list into a file. Element seperator is newline.
     @param file path to write to.
  *)
-let write_list li file = ()
+let write_list li file = 
+	let f = open_out file in
+	let rec print_list = function
+		| [] -> ()
+		| e::q -> 
+			Printf.fprintf f "%d\n" e; 
+			print_list q
+	in print_list li;
+	close_out f
+			
+	 
 
 (** Write a list of prime numbers up to limit into a txt file.
     @param n limit of prime numbers up to which to build up a list of primes.
     @param file path to write to.
 *)
-let write_list_primes n file = ()
-
+let write_list_primes n file = 
+	let l = eratosthenes n in
+	write_list l file
 
 (** Read file safely ; catch End_of_file exception.
     @param in_c input channel.
@@ -63,8 +74,12 @@ let create_list in_c =
 (** Load list of primes into OCaml environment.
     @param file path to load from.
  *)
-let read_list_primes file = []
-
+let read_list_primes file = 
+	let f = open_in file in
+  let res = create_list f in
+  close_in f;
+  res
+	
 (** Get biggest prime.
     @param l list of prime numbers.
  *)
