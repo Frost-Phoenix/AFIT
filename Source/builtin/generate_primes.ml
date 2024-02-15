@@ -101,10 +101,40 @@ let rec last_two l = match l with
     @param limit positive integer bounding searched for primes.
     @param isprime function testing for (pseudo)primality.
  *)
-let double_primes limit isprime = []
+let double_primes limit isprime = 
+	let rec aux = function
+		| i when i > limit -> []
+		| i -> let d = (i * 2) + 1 in
+			if (isprime i) && (isprime d) then (i,d)::(aux (i+2))
+			else aux (i+2)
+	in match limit with
+		| n when n < 5 -> []
+		|	n -> (2,5)::(aux 3)
 
 (** Finding twin primes.
     @param limit positive integer bounding searched for primes.
     @param isprime function testing for (pseudo)primality.
  *)
 let twin_primes limit isprime = []
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
