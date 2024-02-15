@@ -36,3 +36,5 @@ _opam/
 
 # test folder
 test
+
+*.txt
