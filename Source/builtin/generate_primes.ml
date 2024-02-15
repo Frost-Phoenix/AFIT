@@ -115,7 +115,14 @@ let double_primes limit isprime =
     @param limit positive integer bounding searched for primes.
     @param isprime function testing for (pseudo)primality.
  *)
-let twin_primes limit isprime = []
+let twin_primes limit isprime = 
+	let rec aux = function
+		| i when i > limit -> []
+		| i -> let d = i + 2 in
+			if (isprime i) && (isprime d) then (i,d)::(aux (i+2))
+			else aux (i+2)
+	in (aux 3)
+
 
 
 
