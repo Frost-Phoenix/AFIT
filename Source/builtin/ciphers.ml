@@ -13,14 +13,18 @@ open Power
     @param m word to cipher.
     @param b base ; for ASCII codes should be set to 256.
  *)
-let encrypt_cesar k m b = []
+let encrypt_cesar k m b =
+	let rec aux = function
+		| [] -> []
+		| e::q -> ((e+k) mod b)::(aux q)
+	in aux m
 
 (** Cesar's cipher decryption
     @param k is an integer corresponding to key
     @param m encrypted word.
     @param b base ; for ASCII code should be set to 256.
  *)
-let decrypt_cesar k m b = []
+let decrypt_cesar k m b = encrypt_cesar (b - k) m b
 
 
 (********** RSA Cipher **********)
