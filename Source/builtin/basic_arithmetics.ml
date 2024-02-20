@@ -8,7 +8,7 @@ open Builtin
 *)
 let rec gcd a b = match (a,b) with
 	| (a, 0) -> abs a
-	| (a, b) -> gcd b (modulo (abs a) (abs b))
+	| (a, b) -> gcd b ((abs a) mod (abs b))
 
 (** Extended euclidean division of two integers NOT OCAML DEFAULT.
     Given non-zero entries a b computes triple (u, v, d) such that
