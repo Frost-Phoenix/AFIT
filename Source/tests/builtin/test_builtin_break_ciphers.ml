@@ -8,7 +8,7 @@ let sprintf = Printf.sprintf
 (* Only tests for RSA for now. *)
 
 let break_tests () =
-    let cases = [((99400891, 36199003), (9967, 9973))]
+    let cases = [((55, 3), (5, 11)); ((99400891, 36199003), (9967, 9973))]
     and do_check ((n, e), expected) =
         check
             (pair int int)
