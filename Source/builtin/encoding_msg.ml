@@ -24,9 +24,10 @@ let encode str bits =
  *)
 let decode msg bits = 
 	let rec aux = function 
-		| n when (msg lsr (n * bits)) = 0 -> ""
+		| n when msg lsr (n * bits) = 0 || (n * bits) >= 64 -> ""
 		| n -> 
-			let nb = (msg lsr (n * bits)) land 127 in    (* 127 = 0111_1111 *)
+			let shift_m = (msg lsr (n * bits)) in
+			let nb = shift_m land ((1 lsl (bits)) - 1) in    (* 2^bits - 1 *)
 			let c = String.make 1 (Char.chr nb) in
 			(aux (n + 1)) ^ c
 	in aux 0
