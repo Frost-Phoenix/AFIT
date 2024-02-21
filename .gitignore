@@ -38,3 +38,4 @@ _opam/
 test
 
 *.txt
+default.nix
