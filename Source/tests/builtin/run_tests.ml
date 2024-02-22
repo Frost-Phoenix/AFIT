@@ -16,9 +16,9 @@ open Test_builtin_break_ciphers
 (* ("generate_primes",    generate_primes_set);  *)
 (* ("ciphers",            ciphers_set) *)
 (* ("break_ciphers",      break_ciphers_set); *)
+(* ("encoding_msg",       encoding_msg_set); *)
 
 let builtin_test_suite  = [
- ("encoding_msg",       encoding_msg_set); 
 ]
 
 

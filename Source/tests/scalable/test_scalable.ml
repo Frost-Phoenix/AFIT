@@ -76,7 +76,7 @@ let bigger_n_tests () =
       ((from_int_n 10, from_int_n 10), true) ; ((from_int_n 0, from_int_n 0), true) ;           
     ]
     and do_check ((nA, nB), expected) =
-        check bool (print_bA "bigger_n: " nA ^ print_bA " ; " nB) expected (nA >=! nB)
+        check bool (print_bA "bigger_b: " nA ^ print_bA " ; " nB) expected (nA >=! nB)
     in
     List.iter do_check cases
 
@@ -94,12 +94,83 @@ let smaller_n_tests () =
 
 let compare_b_tests () =
     let cases = [
-      ((from_int_n 10, from_int_n 15), -1) ; ((from_int_n 15, from_int_n 10), 1) ; 
-      ((from_int_n 0, from_int_n 15), -1) ; ((from_int_n 0, from_int_n 4), -1) ; 
-      ((from_int_n 104243, from_int_n 15523523), -1) ; ((from_int_n 102142144, from_int_n 154324), 1) ;           
+      ((from_int 10, from_int 15), -1) ; ((from_int 15, from_int 10), 1) ; 
+      ((from_int 0, from_int 15), -1) ; ((from_int 0, from_int 4), -1) ; 
+      ((from_int 104243, from_int 15523523), -1) ; ((from_int 102142144, from_int 154324), 1) ;           
+      ((from_int (-10), from_int 15), -1) ; ((from_int (-15), from_int 10), -1) ; 
+      ((from_int (0), from_int (-15)), 1) ; ((from_int (-15), from_int 10), -1) ; 
     ]
-    and do_check ((nA, nB), expected) =
-        check int (print_bA "compare_b: " nA ^ print_bA " ; " nB) expected (compare_b nA nB)
+    and do_check ((bA, bB), expected) =
+        check int (print_bA "compare_b: " bA ^ print_bA " ; " bB) expected (compare_b bA bB)
+    in
+    List.iter do_check cases
+
+let bigger_strict_b_tests () =
+    let cases = [
+      ((from_int 10, from_int 15), false) ; ((from_int 15, from_int 10), true) ; 
+      ((from_int 0, from_int 15), false) ; ((from_int 0, from_int 4), false) ; 
+      ((from_int 104243, from_int 15523523), false) ; ((from_int 102142144, from_int 154324), true) ;           
+    ]
+    and do_check ((bA, bB), expected) =
+        check bool (print_bA "bigger_stric_b: " bA ^ print_bA " ; " bB) expected (bA >> bB)
+    in
+    List.iter do_check cases
+
+let smaller_strict_b_tests () =
+    let cases = [
+      ((from_int 10, from_int 15), true) ; ((from_int 15, from_int 10), false) ; 
+      ((from_int 0, from_int 15), true) ; ((from_int 0, from_int 4), true) ; 
+      ((from_int 104243, from_int 15523523), true) ; ((from_int 102142144, from_int 154324), false) ;           
+      ((from_int (-10), from_int 15), true) ; ((from_int (-15), from_int 10), true) ; 
+      ((from_int 0, from_int (-15)), false) ; ((from_int (-10), from_int (-15)), false) ;
+      (([0; 1; 0; 0; 0; 1], [0; 1; 0; 0; 0; 1]), false) 
+    ]
+    and do_check ((bA, bB), expected) =
+        check bool (print_bA "smaller_strict_b: " bA ^ print_bA " ; " bB) expected (bA << bB)
+    in
+    List.iter do_check cases
+
+
+let bigger_b_tests () =
+    let cases = [
+      ((from_int 10, from_int 15), false) ; ((from_int 15, from_int 10), true) ; 
+      ((from_int 0, from_int 15), false) ; ((from_int 0, from_int 4), false) ; 
+      ((from_int 104243, from_int 15523523), false) ; ((from_int 102142144, from_int 154324), true) ;           
+      ((from_int 10, from_int 10), true) ; ((from_int 0, from_int 0), true) ;           
+    ]
+    and do_check ((bA, bB), expected) =
+        check bool (print_bA "bigger_b: " bA ^ print_bA " ; " bB) expected (bA >>= bB)
+    in
+    List.iter do_check cases
+
+let smaller_b_tests () =
+    let cases = [
+      ((from_int 10, from_int 15), true) ; ((from_int 15, from_int 10), false) ; 
+      ((from_int 0, from_int 15), true) ; ((from_int 0, from_int 4), true) ; 
+      ((from_int 104243, from_int 15523523), true) ; ((from_int 102142144, from_int 154324), false) ;           
+      ((from_int 10, from_int 10), true) ; ((from_int 0, from_int 0), true) ;           
+    ]
+    and do_check ((bA, bB), expected) =
+        check bool (print_bA "smaller_b: " bA ^ print_bA " ; " bB) expected (bA <<= bB)
+    in
+    List.iter do_check cases
+
+let sign_b_tests () =
+    let cases = [
+      ([], 1) ; (from_int 1, 1) ; (from_int (-1), -1) ; (from_int 42, 1) ; (from_int (-42), -1) 
+    ]
+    and do_check (bA, expected) =
+        check int (print_bA "sign_b: " bA) expected (sign_b bA)
+    in
+    List.iter do_check cases
+
+let abs_b_tests () =
+    let cases = [
+      ([], []) ; (from_int 1, from_int 1) ; (from_int (-1), from_int 1) ; 
+      (from_int 42, from_int 42) ; (from_int (-42), from_int 42) 
+    ]
+    and do_check (bA, expected) =
+        check (list int) (print_bA "abs_b: " bA) expected (abs_b bA)
     in
     List.iter do_check cases
 
@@ -109,12 +180,21 @@ let compare_b_tests () =
 let scalable_set = [
   ("From_int function", `Quick, from_int_tests);
   ("To_int function", `Quick, to_int_tests);
+
   ("Reverse function", `Quick, reverse_tests);
+
   ("Compare n function", `Quick, compare_n_tests);
   ("Bigger strict n function", `Quick, bigger_strict_n_tests);
   ("Smaller strict n function", `Quick, smaller_strict_n_tests);
   ("Bigger n function", `Quick, bigger_n_tests);
   ("Smaller n function", `Quick, smaller_n_tests);
-  ("Compare b function", `Quick, compare_b_tests);
 
+  ("Compare b function", `Quick, compare_b_tests);
+  ("Bigger strict b function", `Quick, bigger_strict_b_tests);
+  ("Smaller strict b function", `Quick, smaller_strict_b_tests);
+  ("Bigger b function", `Quick, bigger_b_tests);
+  ("Smaller b function", `Quick, smaller_b_tests);
+
+  ("Sign b function", `Quick, sign_b_tests);
+  ("Abs b function", `Quick, abs_b_tests);
 ]
