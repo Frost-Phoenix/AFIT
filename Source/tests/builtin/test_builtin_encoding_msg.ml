@@ -6,7 +6,7 @@ open Encoding_msg
 let sprintf = Printf.sprintf
 
 let encode_tests () =
-		(* 2294023860466 => 1000010 / 1100001 / 1110011 / 1101000 / 1100001 / 1110010 *)
+    (* 2294023860466 => 1000010 / 1100001 / 1110011 / 1101000 / 1100001 / 1110010 *)
     let cases = [ (("A", 7), 65); (("AB", 7), 8386); (("Bashar", 7), 2294023860466)]
     and do_check ((str, bits), expected) =
         check int (sprintf "encode: \"%s\" on %i bits" str bits) expected (encode str bits)

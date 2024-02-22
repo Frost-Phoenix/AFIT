@@ -10,7 +10,7 @@ open Test_scalable_ciphers
 open Test_scalable_break_ciphers
 
 let scalable_test_suite = [
-	("scalable",                    scalable_set);
+  ("scalable",                    scalable_set);
 ]
      
 (* ("scalable_basic_arithmetics",  basic_arithmetics_set); *)

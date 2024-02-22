@@ -14,7 +14,7 @@ let sign_tests () =
 
 let quot_tests () =
     let cases = [(10, 3), 3; (-10, 3), -4; (10, 2), 5; (-10, 2), -5; (36, 6), 6;
-    			 (10, -3), -3; (10, -2), -5; (-10, -3), 3; (-10, -2), 5]
+           (10, -3), -3; (10, -2), -5; (-10, -3), 3; (-10, -2), 5]
     and do_check ((a, b), expected) =
         check int (sprintf "quot: %i/%i" a b)  expected (quot a b);
     in

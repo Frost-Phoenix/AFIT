@@ -72,7 +72,7 @@ let generate_keys_rsa_tests () =
 
 let encrypt_rsa_tests () =
     let cases = [((7, (55, 3)), 13) ; 
-    						 ((281237, (99400891, 36199003)), 70133953)]
+                 ((281237, (99400891, 36199003)), 70133953)]
     and do_check ((m, (n, e)), expected) =
         check int (sprintf "encrypt_rsa: %i with n=%i and e=%i" m n e) expected (encrypt_rsa m (n, e))
     in
