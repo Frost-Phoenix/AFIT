@@ -15,18 +15,43 @@ down code.
 (** Creates a bitarray from a built-in integer.
     @param x built-in integer.
 *)
-let from_int x = []
-
+let from_int x = 
+	let rec aux = function
+		| 0 -> []
+		| n -> (n land 1)::(aux (n lsr 1))
+	in match x with 
+		| 0 -> []
+		| x when x < 0 -> 1::(aux (abs x))
+		| x -> 0::(aux x)
+		
 (** Transforms bitarray of built-in size to built-in integer.
     UNSAFE: possible integer overflow.
     @param bA bitarray object.
  *)
-let to_int bA = 0
+let to_int bA = 
+	let rec aux n = function
+		| [] -> 0
+		|	x::q -> 
+			match x with
+				| 0 -> aux (n + 1) q
+				| x -> (1 lsl n) + aux (n + 1) q        (* x == 1 *)
+	in match bA with 
+		| [] -> 0
+		| 0::q -> aux 0 q
+		| x::q -> (-1) * (aux 0 q)    							(* x == 1 *)
+			
 
 (** Prints bitarray as binary number on standard output.
     @param bA a bitarray.
   *)
-let print_b bA = ()
+let print_b bA = 
+	let rec aux = function
+		| [] -> ""
+		| x::q -> (aux q) ^ (string_of_int x)
+	in match bA with
+		| [] -> print_string "0"
+		| 0::q -> print_string (aux q)
+		| x::q -> print_string ("-" ^ (aux q))     	(* x == 1 *)
 
 (** Toplevel directive to use print_b as bitarray printer.
     CAREFUL: print_b is then list int printer.
@@ -38,6 +63,15 @@ let print_b bA = ()
     context are understood as bitarrays missing a bit sign and thus
     assumed to be non-negative.
 *)
+
+(** Reverse 'a list
+    @param  'a list
+ *)
+let reverse l = 
+	let rec aux l2 = function
+		| [] -> l2
+		|	x::q -> aux (x::l2) q
+	in aux [] l
 
 (** Comparing naturals. Output is 1 if first argument is bigger than
     second -1 otherwise.

@@ -36,6 +36,8 @@ val print_b : int list -> unit
 *)
 
 
+val reverse : 'a list -> 'a list
+
 (** Comparing naturals. Output is 1 if first argument is bigger than
     second -1 if it is smaller and 0 in case of equality.
     @param nA A natural, a bitarray having no sign bit.
