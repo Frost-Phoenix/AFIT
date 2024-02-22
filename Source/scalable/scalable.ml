@@ -114,7 +114,7 @@ let (>>!) nA nB = if compare_n nA nB = 1 then true else false
     @param nA natural.
     @param nB natural.
  *)
-let (<<!) nA nB = if compare_n nA nB = 1 then false else true
+let (<<!) nA nB = if compare_n nA nB = -1 then true else false
 
 (** Bigger or equal inorder comparison operator on naturals. Returns
     true if first argument is bigger or equal to second and false
@@ -170,7 +170,7 @@ let (>>) bA bB = if compare_b bA bB = 1 then true else false
     @param nA natural.
     @param nB natural.
  *)
-let (<<) bA bB = if compare_b bA bB = 1 then false else true
+let (<<) bA bB = if compare_b bA bB = -1 then true else false
 
 (** Bigger or equal inorder comparison operator on bitarrays. Returns
     true if first argument is bigger or equal to second and false
