@@ -147,8 +147,13 @@ let (<=!) nA nB =
 let compare_b bA bB = 
   match (bA, bB) with
     | ([], [])       ->  0
+    | (0::q, [])     ->  1
+    | (1::q, [])     -> -1
+    | ([], 0::q)     -> -1
+    | ([], 1::q)     ->  1
     | (0::q1, 1::q2) ->  1
     | (1::q1, 0::q2) -> -1
+    | (1::q1, 1::q2) -> -(compare_n q1 q2)
     | (_::q1, _::q2) -> compare_n q1 q2
     | _ -> failwith "compare_b error"
     
@@ -158,14 +163,14 @@ let compare_b bA bB =
     @param nA natural.
     @param nB natural.
  *)
-let (>>) bA bB = true
+let (>>) bA bB = if compare_b bA bB = 1 then true else false
 
 (** Smaller inorder comparison operator on bitarrays. Returns true if
     first argument is smaller than second and false otherwise.
     @param nA natural.
     @param nB natural.
  *)
-let (<<) bA bB = true
+let (<<) bA bB = if compare_b bA bB = 1 then false else true
 
 (** Bigger or equal inorder comparison operator on bitarrays. Returns
     true if first argument is bigger or equal to second and false
@@ -173,7 +178,10 @@ let (<<) bA bB = true
     @param nA natural.
     @param nB natural.
  *)
-let (>>=) bA bB = true
+let (>>=) bA bB =
+  let r = compare_b bA bB in
+    if r = 1 || r = 0 then true
+    else false
 
 (** Smaller or equal inorder comparison operator on naturals. Returns
     true if first argument is smaller or equal to second and false
@@ -181,18 +189,31 @@ let (>>=) bA bB = true
     @param nA natural.
     @param nB natural.
  *)
-let (<<=) bA bB = true
+let (<<=) bA bB =
+  let r = compare_b bA bB in
+    if r = 1 then false
+    else true
 
 
 (** Sign of a bitarray.
     @param bA Bitarray.
 *)
-let sign_b bA = 10
+let sign_b bA = 
+  match bA with 
+    | []   ->  1
+    | 0::_ ->  1
+    | 1::_ -> -1
+    | _ -> failwith "not valid bit array"
+
 
 (** Absolute value of bitarray.
     @param bA Bitarray.
 *)
-let abs_b bA = []
+let abs_b bA = 
+  match bA with
+    | []   -> []
+    | x::q -> 0::q
+        
 
 (** Quotient of integers smaller than 4 by 2.
     @param a Built-in integer smaller than 4.
