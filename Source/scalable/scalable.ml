@@ -23,7 +23,11 @@ let from_int x =
 		| 0 -> []
 		| x when x < 0 -> 1::(aux (abs x))
 		| x -> 0::(aux x)
-		
+
+let from_int_n x = match from_int x with
+	| [] -> []
+	| x::q -> q	
+			
 (** Transforms bitarray of built-in size to built-in integer.
     UNSAFE: possible integer overflow.
     @param bA bitarray object.
@@ -73,27 +77,44 @@ let reverse l =
 		|	x::q -> aux (x::l2) q
 	in aux [] l
 
+(** List len of 'a list
+    @param 'a list
+ *)
+let rec l_len = function
+	| [] -> 0
+	| x::q -> 1 + (l_len q)
+
 (** Comparing naturals. Output is 1 if first argument is bigger than
     second -1 otherwise.
     @param nA A natural, a bitarray having no sign bit.
            Assumed non-negative.
     @param nB A natural.
  *)
-let rec compare_n nA nB = 10
+let rec compare_n nA nB = 
+	let rec aux = function
+		| (1::q1, 0::q2) ->  1
+		| (0::q1, 1::q2) -> -1
+		| (_::q1, _::q2) -> aux (q1, q2)
+		| _ -> 0
+	in match (l_len nA, l_len nB) with
+		| (len1, len2) when len1 > len2 ->  1
+		| (len1, len2) when len1 < len2 -> -1
+		| _ -> aux (reverse nA, reverse nB)
+
 
 (** Bigger inorder comparison operator on naturals. Returns true if
     first argument is bigger than second and false otherwise.
     @param nA natural.
     @param nB natural.
  *)
-let (>>!) nA nB = true
+let (>>!) nA nB = if compare_n nA nB = 1 then true else false
 
 (** Smaller inorder comparison operator on naturals. Returns true if
     first argument is smaller than second and false otherwise.
     @param nA natural.
     @param nB natural.
  *)
-let (<<!) nA nB = true
+let (<<!) nA nB = if compare_n nA nB = 1 then false else true
 
 (** Bigger or equal inorder comparison operator on naturals. Returns
     true if first argument is bigger or equal to second and false
@@ -101,7 +122,10 @@ let (<<!) nA nB = true
     @param nA natural.
     @param nB natural.
  *)
-let (>=!) nA nB = true
+let (>=!) nA nB = 
+	let r = compare_n nA nB in
+	if r = 1 || r = 0 then true
+	else false
 
 (** Smaller or equal inorder comparison operator on naturals. Returns
     true if first argument is smaller or equal to second and false
@@ -109,14 +133,25 @@ let (>=!) nA nB = true
     @param nA natural.
     @param nB natural.
  *)
-let (<=!) nA nB = true
+let (<=!) nA nB = 
+	let r = compare_n nA nB in
+	if r = 1 || r = 0 then false
+	else true
+
 
 (** Comparing two bitarrays. Output is 1 if first argument is bigger
     than second -1 otherwise.
     @param bA A bitarray.
     @param bB A bitarray.
 *)
-let compare_b bA bB = 10
+let compare_b bA bB = 
+	match (bA, bB) with
+		|	([], []) 			 ->  0
+		| (0::q1, 1::q2) ->  1
+		| (1::q1, 0::q2) -> -1
+		| (_::q1, _::q2) -> compare_n q1 q2
+		| _ -> failwith "compare_b error"
+		
 
 (** Bigger inorder comparison operator on bitarrays. Returns true if
     first argument is bigger than second and false otherwise.

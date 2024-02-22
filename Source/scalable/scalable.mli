@@ -19,6 +19,8 @@ decomposition of a non-negative integer.
 *)
 val from_int : int -> int list
 
+val from_int_n : int -> int list
+
 (** Transforms bitarray of built-in size to built-in integer.
     UNSAFE: possible integer overflow.
     @param bA bitarray object.
@@ -37,6 +39,10 @@ val print_b : int list -> unit
 
 
 val reverse : 'a list -> 'a list
+
+val l_len : 'a list -> int
+
+
 
 (** Comparing naturals. Output is 1 if first argument is bigger than
     second -1 if it is smaller and 0 in case of equality.
