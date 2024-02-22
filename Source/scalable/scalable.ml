@@ -135,7 +135,7 @@ let (>=!) nA nB =
  *)
 let (<=!) nA nB = 
 	let r = compare_n nA nB in
-	if r = 1 || r = 0 then false
+	if r = 1 then false
 	else true
 
 
