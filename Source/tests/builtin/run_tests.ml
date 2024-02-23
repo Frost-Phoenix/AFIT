@@ -9,16 +9,16 @@ open Test_builtin_encoding_msg
 open Test_builtin_ciphers
 open Test_builtin_break_ciphers
 
-(* ("builtin",            builtin_set);  *)
-(* ("basic_arithmetics",  basic_arithmetics_set);  *)
-(* ("power",              power_set);  *)
-(* ("test_primes",        test_primes_set);  *)
-(* ("generate_primes",    generate_primes_set);  *)
-(* ("ciphers",            ciphers_set) *)
-(* ("break_ciphers",      break_ciphers_set); *)
-(* ("encoding_msg",       encoding_msg_set); *)
 
 let builtin_test_suite  = [
+  (* ("builtin",            builtin_set); *)
+  (* ("basic_arithmetics",  basic_arithmetics_set); *)
+  (* ("power",              power_set); *)
+  (* ("test_primes",        test_primes_set); *)
+  (* ("generate_primes",    generate_primes_set); *)
+  (* ("ciphers",            ciphers_set); *)
+  (* ("break_ciphers",      break_ciphers_set); *)
+  (* ("encoding_msg",       encoding_msg_set); *)
 ]
 
 

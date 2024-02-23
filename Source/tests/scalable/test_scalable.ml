@@ -174,6 +174,89 @@ let abs_b_tests () =
     in
     List.iter do_check cases
 
+let add_n_tests () =
+    let cases = [
+      ((from_int_n 10, from_int_n 15), from_int_n 25) ; ((from_int_n 15, from_int_n 10), from_int_n 25) ;
+      ((from_int_n 18, from_int_n 13), from_int_n 31) ; ((from_int_n 23, from_int_n 11), from_int_n 34) ;
+      ((from_int_n 85794, from_int_n 1532), from_int_n 87326) ; 
+      ((from_int_n 2342134141, from_int_n 214654), from_int_n 2342348795) ;
+    ]
+    and do_check ((nA, nB), expected) =
+        check (list int) (print_bA "add_n_tests: " nA ^ print_bA " ; " nB) expected (add_n nA nB)
+    in
+    List.iter do_check cases
+
+let diff_n_tests () =
+    let cases = [
+      ((from_int_n 15, from_int_n 10), from_int_n 5) ; ((from_int_n 18, from_int_n 13), from_int_n 5) ; 
+      ((from_int_n 23, from_int_n 11), from_int_n 12) ; ((from_int_n 85794, from_int_n 1532), from_int_n 84262) ; 
+      ((from_int_n 2342134141, from_int_n 214654), from_int_n 2341919487) 
+    ]
+    and do_check ((nA, nB), expected) =
+        check (list int) (print_bA "diff_n_tests: " nA ^ print_bA " ; " nB) expected (diff_n nA nB)
+    in
+    List.iter do_check cases
+
+let add_b_tests () =
+    let cases = [
+      ((from_int (-20), from_int 20), from_int 0) ;
+      ((from_int 10, from_int 15), from_int 25) ; ((from_int 15, from_int 10), from_int 25) ;
+      ((from_int 18, from_int 13), from_int 31) ; ((from_int 23, from_int 11), from_int 34) ;
+      ((from_int 85794, from_int 1532), from_int 87326) ; 
+      ((from_int 2342134141, from_int 214654), from_int 2342348795) ;
+      ((from_int 10, from_int (-15)), from_int (-5)) ; ((from_int (-15), from_int 10), from_int (-5)) ;
+      ((from_int 18, from_int (-13)), from_int 5) ; ((from_int (-23), from_int 11), from_int (-12)) ;
+      ((from_int (-18), from_int (-13)), from_int (31)) ; ((from_int (-23), from_int (-11)), from_int (34)) ;
+      ((from_int 85794, from_int 1532), from_int 87326) ; 
+      ((from_int 2342134141, from_int 214654), from_int 2342348795) ;
+      ((from_int (-85794), from_int 1532), from_int (-84262)) ; 
+      ((from_int (-2342134141), from_int (-214654)), from_int (2342348795)) ;
+    ]
+    and do_check ((bA, bB), expected) =
+        check (list int) (print_bA "add_n_tests: " bA ^ print_bA " ; " bB) expected (add_b bA bB)
+    in
+    List.iter do_check cases
+
+let diff_b_tests () =
+    let cases = [
+      ((from_int 7, from_int 7), from_int 0) ;
+      ((from_int (-7), from_int (-7)), from_int 0) ;
+      ((from_int (-20), from_int 20), from_int (-40)) ;
+      ((from_int (-21), from_int (-20)), from_int (-1)) ;
+      ((from_int (-20), from_int (-21)), from_int 1) ;
+      ((from_int (-20), from_int (-20)), from_int 0) ;
+      ((from_int (-20), from_int 20), from_int (-40)) ;
+      ((from_int 20, from_int (-20)), from_int 40) ;
+      ((from_int 20, from_int 20), from_int 0) ;
+      ((from_int 10, from_int 15), from_int (-5)) ; ((from_int 15, from_int 10), from_int 5) ;
+      ((from_int 18, from_int 13), from_int 5) ; ((from_int 23, from_int 11), from_int 12) ;
+      ((from_int 85794, from_int 1532), from_int 84262) ; 
+      ((from_int 2342134141, from_int 214654), from_int 2341919487) ;
+      ((from_int 10, from_int (-15)), from_int 25) ; ((from_int (-15), from_int 10), from_int (-25)) ;
+      ((from_int 18, from_int (-13)), from_int 31) ; ((from_int (-23), from_int 11), from_int (-34)) ;
+      ((from_int (-18), from_int (-13)), from_int (-5)) ; ((from_int (-23), from_int (-11)), from_int (-12)) ;
+      ((from_int 85794, from_int (-1532)), from_int 87326) ; 
+      ((from_int (-2342134141), from_int (-214654)), from_int (-2341919487)) ;
+      ((from_int (-85794), from_int 1532), from_int (-87326)) ; 
+      ((from_int (-2342134141), from_int (-214654)), from_int (-2341919487)) ;
+    ]
+    and do_check ((bA, bB), expected) =
+        check (list int) (print_bA "diff_n_tests: " bA ^ print_bA " ; " bB) expected (diff_b bA bB)
+    in
+    List.iter do_check cases
+
+let shift_tests () =
+    let cases = [
+      ((from_int 10, 1), from_int 20) ; ((from_int 10, 2), from_int 40) ;
+      ((from_int (-10), 1), from_int (-20)) ; ((from_int (-10), 2), from_int (-40)) ;
+    ]
+    and do_check ((bA, n), expected) =
+        check (list int) (print_bA "abs_b: " bA ^ " ; n = " ^ string_of_int n) expected (shift bA n)
+    in
+    List.iter do_check cases
+
+
+
 (****************************************************************************)
 (****************************************************************************)
 
@@ -197,4 +280,12 @@ let scalable_set = [
 
   ("Sign b function", `Quick, sign_b_tests);
   ("Abs b function", `Quick, abs_b_tests);
+
+  ("Add n function", `Quick, add_n_tests);
+  ("Diff n function", `Quick, diff_n_tests);
+
+  ("Add b function", `Quick, add_b_tests); 
+  ("Diff b function", `Quick, diff_b_tests); 
+
+  ("Shift b function", `Quick, shift_tests); 
 ]
