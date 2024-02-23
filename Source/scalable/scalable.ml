@@ -234,7 +234,28 @@ let _div_t a = (_quot_t a, _mod_t a)
     @param nA Natural.
     @param nB Natural.
 *)
-let add_n nA nB = []
+let add_n nA nB =
+  let rec aux = function
+    | ([], [], 0) -> [ ]
+    | ([], [], 1) -> [1]
+    | (0::q1, [], 0) -> 0::(aux (q1, [], 0))
+    | (0::q1, [], 1) -> 1::(aux (q1, [], 0))
+    | (1::q1, [], 0) -> 1::(aux (q1, [], 0))
+    | (1::q1, [], 1) -> 0::(aux (q1, [], 1))
+    | ([], 0::q2, 0) -> 0::(aux ([], q2, 0))
+    | ([], 0::q2, 1) -> 1::(aux ([], q2, 0))
+    | ([], 1::q2, 0) -> 1::(aux ([], q2, 0))
+    | ([], 1::q2, 1) -> 0::(aux ([], q2, 1))
+    | (0::q1, 0::q2, 0) -> 0::(aux (q1, q2, 0))
+    | (0::q1, 0::q2, 1) -> 1::(aux (q1, q2, 0))
+    | (1::q1, 0::q2, 0) -> 1::(aux (q1, q2, 0))
+    | (0::q1, 1::q2, 0) -> 1::(aux (q1, q2, 0))
+    | (1::q1, 0::q2, 1) -> 0::(aux (q1, q2, 1))
+    | (0::q1, 1::q2, 1) -> 0::(aux (q1, q2, 1))
+    | (1::q1, 1::q2, 0) -> 0::(aux (q1, q2, 1))
+    | (1::q1, 1::q2, 1) -> 1::(aux (q1, q2, 1))
+    | _ -> [55]
+  in aux (nA, nB, 0)
 
 (** Difference of two naturals.
     UNSAFE: First entry is assumed to be bigger than second.
