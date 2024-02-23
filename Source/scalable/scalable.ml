@@ -24,9 +24,40 @@ let from_int x =
     | x when x < 0 -> 1::(aux (abs x))
     | x -> 0::(aux x)
 
+(** Creates a natural bitarray (no sign bit) from a built-in integer.
+    @param x built-in integer.
+*)
 let from_int_n x = match from_int x with
   | [] -> []
   | x::q -> q 
+
+(** Reverse 'a list
+    @param  'a list
+ *)
+let reverse l = 
+  let rec aux l2 = function
+    | [] -> l2
+    | x::q -> aux (x::l2) q
+  in aux [] l
+
+(** List len of 'a list
+    @param 'a list
+ *)
+let rec l_len = function
+  | [] -> 0
+  | x::q -> 1 + (l_len q)
+
+(** Creates a bitarray from a built-in integer.
+    @param x built-in integer.
+*)
+let trim_0 l = 
+  let rec aux = function
+    | [] -> []
+    | 1::q -> 1::q
+    | 0::q -> aux q
+    | _ -> failwith "trim_0: error unmatch case"
+  in reverse (aux (reverse l))
+
       
 (** Transforms bitarray of built-in size to built-in integer.
     UNSAFE: possible integer overflow.
@@ -68,21 +99,6 @@ let print_b bA =
     assumed to be non-negative.
 *)
 
-(** Reverse 'a list
-    @param  'a list
- *)
-let reverse l = 
-  let rec aux l2 = function
-    | [] -> l2
-    | x::q -> aux (x::l2) q
-  in aux [] l
-
-(** List len of 'a list
-    @param 'a list
- *)
-let rec l_len = function
-  | [] -> 0
-  | x::q -> 1 + (l_len q)
 
 (** Comparing naturals. Output is 1 if first argument is bigger than
     second -1 otherwise.
@@ -254,15 +270,32 @@ let add_n nA nB =
     | (0::q1, 1::q2, 1) -> 0::(aux (q1, q2, 1))
     | (1::q1, 1::q2, 0) -> 0::(aux (q1, q2, 1))
     | (1::q1, 1::q2, 1) -> 1::(aux (q1, q2, 1))
-    | _ -> [55]
+    | _ -> failwith "add_n: error case unmatch"
   in aux (nA, nB, 0)
+
+
 
 (** Difference of two naturals.
     UNSAFE: First entry is assumed to be bigger than second.
     @param nA Natural.
     @param nB Natural.
 *)
-let diff_n nA nB = []
+let diff_n nA nB = 
+  let rec aux = function
+    | ([], [], r) -> []
+    | (b::q1, [], 0) -> b::(aux (q1, [], 0))
+    | (0::q1, [], 1) -> 1::(aux (q1, [], 1))
+    | (1::q1, [], 1) -> 0::(aux (q1, [], 0))
+    | (0::q1, 0::q2, 0) -> 0::(aux (q1, q2, 0))
+    | (0::q1, 0::q2, 1) -> 1::(aux (q1, q2, 1))
+    | (1::q1, 0::q2, 0) -> 1::(aux (q1, q2, 0))
+    | (1::q1, 0::q2, 1) -> 0::(aux (q1, q2, 0))
+    | (0::q1, 1::q2, 0) -> 1::(aux (q1, q2, 1))
+    | (0::q1, 1::q2, 1) -> 0::(aux (q1, q2, 1))
+    | (1::q1, 1::q2, 0) -> 0::(aux (q1, q2, 0))
+    | (1::q1, 1::q2, 1) -> 1::(aux (q1, q2, 1))
+    | _ -> [55]
+  in trim_0 (aux (nA, nB, 0))
 
 (** Addition of two bitarrays.
     @param bA Bitarray.
