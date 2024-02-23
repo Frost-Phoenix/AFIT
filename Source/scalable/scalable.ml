@@ -349,7 +349,12 @@ let diff_b bA bB =
     @param bA Bitarray.
     @param d Non-negative integer.
 *)
-let rec shift bA d = []
+let rec shift bA d = 
+  match (d, bA) with
+    | _, [] -> []
+    | 0, l -> l
+    | n, x::q -> x::0::(shift q (n - 1))
+
 
 (** Multiplication of two bitarrays.
     @param bA Bitarray.
