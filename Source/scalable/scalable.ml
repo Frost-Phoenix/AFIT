@@ -324,7 +324,26 @@ let add_b bA bB =
     @param bA Bitarray.
     @param bB Bitarray.
 *)
-let diff_b bA bB = []
+let diff_b bA bB = 
+  let res = 
+    match (bA, bB) with
+      | [], [] -> []
+      | l, [] -> l
+      | [], 0::l -> 1::l
+      | [], 1::l -> 0::l
+      | 0::q1, 1::q2 -> 0::(add_n q1 q2)
+      | 1::q1, 0::q2 -> 1::(add_n q1 q2)
+      | 0::q1, 0::q2 -> 
+        if q1 >=! q2 then 0::(diff_n q1 q2)
+        else 1::(diff_n q2 q1)
+      | 1::q1, 1::q2 -> 
+        if q1 >>! q2 then 1::(diff_n q1 q2)
+        else if q2 >>! q1 then 0::(diff_n q2 q1)
+        else []
+      | _ -> failwith "add_b: error unmatch case"
+  in match res with
+    | [0] -> []
+    | l -> l
 
 (** Shifts bitarray to the left by a given natural number.
     @param bA Bitarray.
