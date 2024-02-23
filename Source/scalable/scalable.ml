@@ -301,7 +301,21 @@ let diff_n nA nB =
     @param bA Bitarray.
     @param bB Bitarray.
  *)
-let add_b bA bB = []
+let add_b bA bB = 
+  match (bA, bB) with
+    | [], [] -> []
+    | [], l -> l
+    | l, [] -> l
+    | 0::q1, 0::q2 -> 0::(add_n q1 q2)
+    | 1::q1, 1::q2 -> 0::(add_n q1 q2)
+    | 0::q1, 1::q2 -> 
+      if q1 >=! q2 then 0::(diff_n q1 q2)
+      else 1::(diff_n q2 q1)
+    | 1::q1, 0::q2 -> 
+      if q2 >=! q1 then 0::(diff_n q1 q2)
+      else 1::(diff_n q1 q2)
+    | _ -> failwith "add_b: error unmatch case"
+
 
 (** Difference of two bitarrays.
     @param bA Bitarray.
