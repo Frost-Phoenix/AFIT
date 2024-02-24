@@ -167,6 +167,12 @@ val shift_n : int list -> int -> int list
 *)
 val shift : int list -> int -> int list
 
+(** Shifts bitarray to the right by a given natural number.
+    @param bA Bitarray.
+    @param d Non-negative integer.
+*)
+val shift_r : int list -> int -> int list
+
 (** Multiplication of two naturals.
     @param nA natural.
     @param nB natural.
@@ -202,3 +208,10 @@ val mod_b : int list -> int list -> int list
     @param bB Bitarray you wnat to divide by.
 *)
 val div_b : int list -> int list -> (int list * int list)
+
+
+(** Logical and of two bitarrays.
+    @param bA Bitarray.
+    @param bB Bitarray.
+*)
+val and_b : int list -> int list -> int list

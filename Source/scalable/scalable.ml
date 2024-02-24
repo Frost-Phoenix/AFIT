@@ -361,11 +361,27 @@ let rec shift_n nA d =
     @param d Non-negative integer.
 *)
 let rec shift bA d = 
-  match (d, bA) with
-    | _, [] -> []
-    | 0, l -> l
-    | n, x::q -> x::0::(shift q (n - 1))
+  match (bA, d) with
+    | [], _ -> []
+    | l, 0  -> l
+    | b::q, n -> b::(shift_n q n)
 
+(** Shifts bitarray to the right by a given natural number.
+    @param bA Bitarray.
+    @param d Non-negative integer.
+*)
+let rec shift_r bA d = 
+  let rec aux = function
+    | [], _ -> []
+    | l, 0  -> l
+    | _::q, n -> aux (q, (n-1))
+	in match bA with 
+	| [] -> []
+	| b::q -> 
+		let res = match aux (q, d) with
+			| [] -> []
+			| l -> b::l
+		in res
 
 (** Multiplication of two naturals.
     @param nA natural.
@@ -414,7 +430,11 @@ let quot_b bA bB =
 	match (bA, bB) with
 		| _, [] -> failwith "quot_b: error division by zero"
 		| [], _ -> []
-		| (x1::q1, x2::q2) when x1 = x2  -> 0::(quot_n q1 q2)
+		| (x1::q1, x2::q2) when x1 = x2  -> 
+			let res = match (quot_n q1 q2) with
+									| [] -> []
+									| res -> 0::res
+			in res
 		| (x1::q1, x2::q2) when x1 != x2 -> 
 				let res = 1::(quot_n q1 q2) in 
 				if (mult_b res bB) = bA then res
@@ -433,3 +453,20 @@ let mod_b bA bB = diff_b bA (mult_b bB (quot_b bA bB))
     @param bB Bitarray you wnat to divide by.
 *)
 let div_b bA bB = (quot_b bA bB, mod_b bA bB)
+
+
+(** Logical and of two bitarrays.
+    @param bA Bitarray.
+    @param bB Bitarray.
+*)
+let and_b bA bB = 
+	let rec aux = function 
+		| [], _ -> []
+		| _, [] -> []
+		| x1::q1, x2::q2 -> (x1 land x2)::(aux (q1, q2))
+	in match (bA, bB) with 
+		| [], _ -> []
+		| _, [] -> []
+		| _::q1, _::q2 ->
+			if q1 >>= q2 then 0::(aux (q1, q2))
+			else 0::(aux (q2, q1))
