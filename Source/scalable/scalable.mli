@@ -183,6 +183,12 @@ val mult_b : int list -> int list -> int list
     @param bA Bitarray you want to divide by second argument.
     @param bB Bitarray you divide by. Non-zero!
 *)
+val quot_n : int list -> int list -> int list
+
+(** Quotient of two bitarrays.
+    @param bA Bitarray you want to divide by second argument.
+    @param bB Bitarray you divide by. Non-zero!
+*)
 val quot_b : int list -> int list -> int list
 
 (** Modulo of a bitarray against a positive one.

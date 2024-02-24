@@ -398,16 +398,38 @@ let mult_b bA bB =
     @param bA Bitarray you want to divide by second argument.
     @param bB Bitarray you divide by. Non-zero!
 *)
-let quot_b bA bB =  []
+let quot_n nA nB = 
+	let rec aux res = function
+		| (_, []) -> failwith "quot_n: error division by zero"
+		| ([], _) -> res
+		| (l1, l2) when l1 <<! l2 -> res
+		| (l1, l2) -> aux (add_n res [1]) ((diff_n l1 l2), l2)
+	in aux [] (nA, nB)
+		
+(** Quotient of two bitarrays.
+    @param bA Bitarray you want to divide by second argument.
+    @param bB Bitarray you divide by. Non-zero!
+*)
+let quot_b bA bB = 
+	match (bA, bB) with
+		| _, [] -> failwith "quot_b: error division by zero"
+		| [], _ -> []
+		| (x1::q1, x2::q2) when x1 = x2  -> 0::(quot_n q1 q2)
+		| (x1::q1, x2::q2) when x1 != x2 -> 
+				let res = 1::(quot_n q1 q2) in 
+				if (mult_b res bB) = bA then res
+				else diff_b res (from_int 1)
+		| _ -> failwith "quot_b: error unmatch case"
+		
 
 (** Modulo of a bitarray against a positive one.
     @param bA Bitarray the modulo of which you're computing.
     @param bB Bitarray which is modular base.
  *)
-let mod_b bA bB = []
+let mod_b bA bB = diff_b bA (mult_b bB (quot_b bA bB))
 
 (** Integer division of two bitarrays.
     @param bA Bitarray you want to divide.
     @param bB Bitarray you wnat to divide by.
 *)
-let div_b bA bB = ([], [])
+let div_b bA bB = (quot_b bA bB, mod_b bA bB)
