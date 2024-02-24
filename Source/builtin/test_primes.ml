@@ -7,7 +7,7 @@ open Power
 (** Deterministic primality test *)
 let is_prime n = 
   let rec aux d = d * d > n || (n mod d <> 0 && aux (d + 2))
-    in n = 2 || (n mod 2 <> 0 && aux 3) 
+    in n = 2 || (n > 2 && (n mod 2 <> 0 && aux 3))
   (* 
   let rec aux = function
     | d when d*d > n -> true

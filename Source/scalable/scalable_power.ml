@@ -17,22 +17,23 @@ let pow x n =
     @param x base, a bitarray
     @param n exponent, a non-negative bitarray
  *)
-let power x n = 
-	let rec aux = function
+let power x n = []
+(*	let rec aux = function
     | (_, []) -> [0;1]
     | (a, b) ->
       let tmp = aux (a, (quot_b b [0;0;1])) in
       if (mod_b b [0;0;1]) = [] then (mult_b tmp tmp)
       else (mult_b a (mult_b tmp tmp))
   in aux (x, n)	
+*)
 
 (** Fast modular exponentiation function. Logarithmic complexity.
     @param x base, a bitarray
     @param n exponent, a non-negative bitarray
     @param m modular base, a positive bitarray
  *)
-let mod_power x n m = 
-	let rec aux = function 
+let mod_power x n m = []
+(*	let rec aux = function 
     | (_, e) when (shift [0;1] e) >> n -> [0;1]
     | (a, e) ->
       let keep = and_b (shift_r n e) [0;1] = [0;1]
@@ -43,7 +44,7 @@ let mod_power x n m =
   in
   	if x = [] then []
   	else mod_b (aux(mod_b x m, 0)) m
-
+*)
 
 (** Fast modular exponentiation function mod prime. Logarithmic complexity.
     It makes use of the Little Fermat Theorem.
@@ -51,4 +52,7 @@ let mod_power x n m =
     @param n exponent, a non-negative bitarray
     @param p prime modular base, a positive bitarray
  *)
-let prime_mod_power x n p = mod_power x n p
+let prime_mod_power x n p = []
+(*	let u = mod_b n (diff_b p [0;1])
+  in mod_power x u p
+*)
