@@ -245,13 +245,132 @@ let diff_b_tests () =
     in
     List.iter do_check cases
 
+let shift_n_tests () =
+    let cases = [
+      ((from_int_n 1, 10), from_int_n 1024) ; ((from_int_n 1, 0), from_int_n 1) ;
+      ((from_int_n 123, 24), from_int_n 2063597568) ; ((from_int_n 1, 0), from_int_n 1) ;
+      ((from_int_n 0, 1), from_int_n 0) ; ((from_int_n 10, 0), from_int_n 10) ;
+      ((from_int_n 10, 1), from_int_n 20) ; ((from_int_n 10, 2), from_int_n 40) ;
+    ]
+    and do_check ((nA, n), expected) =
+        check (list int) (print_bA "shift_n: " nA ^ " ; n = " ^ string_of_int n) expected (shift_n nA n)
+    in
+    List.iter do_check cases
+
 let shift_tests () =
     let cases = [
+      ((from_int 1, 10), from_int 1024) ; ((from_int 1, 0), from_int 1) ;
+      ((from_int 123, 24), from_int 2063597568) ; ((from_int 3, 7), from_int 384) ;
+      ((from_int 0, 1), from_int 0) ; ((from_int 10, 0), from_int 10) ;
       ((from_int 10, 1), from_int 20) ; ((from_int 10, 2), from_int 40) ;
       ((from_int (-10), 1), from_int (-20)) ; ((from_int (-10), 2), from_int (-40)) ;
     ]
     and do_check ((bA, n), expected) =
-        check (list int) (print_bA "abs_b: " bA ^ " ; n = " ^ string_of_int n) expected (shift bA n)
+        check (list int) (print_bA "shift_b: " bA ^ " ; n = " ^ string_of_int n) expected (shift bA n)
+    in
+    List.iter do_check cases
+
+let shift_r_tests () =
+    let cases = [
+      ((from_int 1, 10), from_int 0) ; ((from_int 1, 0), from_int 1) ;
+      ((from_int 123, 2), from_int 30) ; ((from_int 123, 0), from_int 123) ;
+      ((from_int 0, 1), from_int 0) ; ((from_int 10, 0), from_int 10) ;
+    ]
+    and do_check ((bA, n), expected) =
+        check (list int) (print_bA "shift_r: " bA ^ " ; n = " ^ string_of_int n) expected (shift_r bA n)
+    in
+    List.iter do_check cases
+
+let mult_n_tests () =
+    let cases = [
+			((from_int_n 13, from_int_n 57), from_int_n 741) ; 
+			((from_int_n 0, from_int_n 57), from_int_n 0) ; 
+			((from_int_n 13, from_int_n 0), from_int_n 0) ; 
+			((from_int_n 0, from_int_n 0), from_int_n 0) ; 
+			((from_int_n 38753, from_int_n 4334985), from_int_n 167993673705) ; 
+    ]
+    and do_check ((nA, nB), expected) =
+        check (list int) (print_bA "mult_n_tests: " nA ^ print_bA " ; " nB) expected (mult_n nA nB)
+    in
+    List.iter do_check cases
+
+let mult_b_tests () =
+    let cases = [
+			((from_int 13, from_int 57), from_int 741) ; 
+			((from_int 0, from_int 57), from_int 0) ; 
+			((from_int 13, from_int 0), from_int 0) ; 
+			((from_int 0, from_int 0), from_int 0) ; 
+			((from_int 38753, from_int 4334985), from_int 167993673705) ; 
+			((from_int (-13), from_int (-57)), from_int 741) ; 
+			((from_int (-0), from_int (-57)), from_int 0) ; 
+			((from_int (-38753), from_int (-4334985)), from_int 167993673705) ; 
+			((from_int (-13), from_int 57), from_int (-741)) ; 
+			((from_int 0, from_int (-57)), from_int 0) ; 
+			((from_int 38753, from_int (-4334985)), from_int (-167993673705)) ; 
+    ]
+    and do_check ((bA, bB), expected) =
+        check (list int) (print_bA "mult_b_tests: " bA ^ print_bA " ; " bB) expected (mult_b bA bB)
+    in
+    List.iter do_check cases
+
+let quot_n_tests () =
+    let cases = [
+			((from_int_n 13, from_int_n 5), from_int_n 2) ; 
+			((from_int_n 27, from_int_n 3), from_int_n 9) ; 
+			((from_int_n 1245, from_int_n 5), from_int_n 249) ; 
+			((from_int_n 2093858594, from_int_n 23525), from_int_n 89005) ; 
+	 (* ((from_int_n 239859843562, from_int_n 2323), from_int_n 103254345) ; *)
+    ]
+    and do_check ((nA, nB), expected) =
+        check (list int) (print_bA "quot_n_tests: " nA ^ print_bA " ; " nB) expected (quot_n nA nB)
+    in
+    List.iter do_check cases
+
+let quot_b_tests () =
+    let cases = [
+			((from_int 1, from_int 2), from_int 0) ; 
+			((from_int 10, from_int 3), from_int 3) ; 
+			((from_int 13, from_int 5), from_int 2) ; 
+			((from_int 27, from_int 3), from_int 9) ; 
+			((from_int 1245, from_int 5), from_int 249) ; 
+			((from_int 2093858594, from_int 23525), from_int 89005) ; 
+	 (* ((from_int_n 239859843562, from_int_n 2323), from_int_n 103254345) ; *)
+			((from_int (-10), from_int 3), from_int (-4)) ; 
+			((from_int (-10), from_int 2), from_int (-5)) ; 
+			((from_int 10, from_int (-3)), from_int (-4)) ; 
+			((from_int 10, from_int (-2)), from_int (-5)) ; 
+			((from_int (-10), from_int (-3)), from_int 3) ; 
+			((from_int (-10), from_int (-2)), from_int 5) ; 
+    ]
+    and do_check ((bA, bB), expected) =
+        check (list int) (print_bA "quot_b_tests: " bA ^ print_bA " ; " bB) expected (quot_b bA bB)
+    in
+    List.iter do_check cases
+
+let mod_b_tests () =
+    let cases = [
+			((from_int 10, from_int 3), from_int 1) ; 
+			((from_int 13, from_int 5), from_int 3) ; 
+			((from_int 27, from_int 3), from_int 0) ; 
+			((from_int 1245, from_int 5), from_int 0) ; 
+			((from_int (-10), from_int 3), from_int 2) ; 
+			((from_int (-10), from_int 2), from_int 0) ; 
+    ]
+    and do_check ((bA, bB), expected) =
+        check (list int) (print_bA "mod_b_tests: " bA ^ print_bA " ; " bB) expected (mod_b bA bB)
+    in
+    List.iter do_check cases
+
+let and_b_tests () =
+    let cases = [
+			((from_int 10, from_int 3), from_int 2) ; 
+			((from_int 13, from_int 5), from_int 5) ; 
+			((from_int 27, from_int 3), from_int 3) ; 
+			((from_int 1245, from_int 5), from_int 5) ; 
+			((from_int 11, from_int 10), from_int 10) ; 
+    ]
+    and do_check ((bA, bB), expected) =
+        check (list int) (print_bA "and_b_tests: " bA ^ print_bA " ; " bB) expected (and_b bA bB)
     in
     List.iter do_check cases
 
@@ -287,5 +406,16 @@ let scalable_set = [
   ("Add b function", `Quick, add_b_tests); 
   ("Diff b function", `Quick, diff_b_tests); 
 
+  ("Shift n function", `Quick, shift_n_tests); 
   ("Shift b function", `Quick, shift_tests); 
+  ("Shift_r b function", `Quick, shift_r_tests); 
+
+  ("Mult n function", `Quick, mult_n_tests); 
+  ("Mult b function", `Quick, mult_b_tests); 
+
+  ("Quot n function", `Quick, quot_n_tests); 
+  ("Quot b function", `Quick, quot_b_tests); 
+  ("Mod b function", `Quick, mod_b_tests); 
+
+  ("And b function", `Quick, and_b_tests); 
 ]
