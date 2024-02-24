@@ -155,11 +155,23 @@ val add_b : int list -> int list -> int list
 *)
 val diff_b : int list -> int list -> int list
 
+(** Shifts natural to the left by a given natural number.
+    @param nA natural.
+    @param d Non-negative integer.
+*)
+val shift_n : int list -> int -> int list
+
 (** Shifts bitarray to the left by a given natural number.
     @param bA Bitarray.
     @param d Non-negative integer.
 *)
 val shift : int list -> int -> int list
+
+(** Multiplication of two naturals.
+    @param nA natural.
+    @param nB natural.
+*)
+val mult_n : int list -> int list -> int list
 
 (** Multiplication of two bitarrays.
     @param bA Bitarray.

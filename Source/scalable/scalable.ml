@@ -345,6 +345,17 @@ let diff_b bA bB =
     | [0] -> []
     | l -> l
 
+(** Shifts natural to the left by a given natural number.
+    @param nA natural.
+    @param d Non-negative integer.
+*)
+let rec shift_n nA d = 
+  match (d, nA) with
+    | _, [] -> []
+    | 0, l -> l
+    | n, l -> 0::(shift_n l (n - 1))
+
+
 (** Shifts bitarray to the left by a given natural number.
     @param bA Bitarray.
     @param d Non-negative integer.
@@ -356,11 +367,32 @@ let rec shift bA d =
     | n, x::q -> x::0::(shift q (n - 1))
 
 
+(** Multiplication of two naturals.
+    @param nA natural.
+    @param nB natural.
+*)
+let mult_n nA nB = 
+	let rec aux n1 = function
+		| [], res, n -> res
+		| 0::q2, res, n -> aux n1 (q2, res, (n+1))
+		| 1::q2, res, n -> aux n1 (q2, (add_n res (shift_n n1 n)), (n+1))
+		| _ -> failwith "mult_n: error unmatch case"
+	in if nA >=! nB then aux nA (nB, [], 0)
+	else aux nB (nA, [], 0)
+
+
+
 (** Multiplication of two bitarrays.
     @param bA Bitarray.
     @param bB Bitarray.
 *)
-let mult_b bA bB = []
+let mult_b bA bB = 
+	match (bA, bB) with
+		| ([],_) | (_,[]) -> []
+		| (x1::q1, x2::q2) when x1 = x2  -> 0::(mult_n q1 q2)
+		| (x1::q1, x2::q2) when x1 != x2 -> 1::(mult_n q1 q2)
+		| _ -> failwith "mult_b: error unmatch case"
+	
 
 (** Quotient of two bitarrays.
     @param bA Bitarray you want to divide by second argument.
