@@ -17,15 +17,15 @@ let pow x n =
     @param x base, a bitarray
     @param n exponent, a non-negative bitarray
  *)
-let power x n = []
-(*	let rec aux = function
+let power x n = 
+	let rec aux = function
     | (_, []) -> [0;1]
     | (a, b) ->
       let tmp = aux (a, (quot_b b [0;0;1])) in
       if (mod_b b [0;0;1]) = [] then (mult_b tmp tmp)
       else (mult_b a (mult_b tmp tmp))
   in aux (x, n)	
-*)
+
 
 (** Fast modular exponentiation function. Logarithmic complexity.
     @param x base, a bitarray
