@@ -34,7 +34,7 @@ let power x n =
  *)
 let mod_power x n m = 
 	let rec aux = function 
-		| _, _, 100 -> []	
+		| _, _, 25 -> []	
     | (_, e, _) when (shift [0;1] e) >> n -> [0;1]
     | (a, e, c) ->
       let keep = and_b (shift_r n e) [0;1] = [0;1]
