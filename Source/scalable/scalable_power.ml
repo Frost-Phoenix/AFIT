@@ -32,8 +32,8 @@ let power x n =
     @param n exponent, a non-negative bitarray
     @param m modular base, a positive bitarray
  *)
-let mod_power x n m =
-	let rec aux = function 
+let mod_power x n m = []
+(*	let rec aux = function 
     | (_, e) when (shift [0;1] e) >> n -> [0;1]
     | (a, e) ->
       let keep = and_b (shift_r n e) [0;1] = [0;1]
@@ -44,7 +44,7 @@ let mod_power x n m =
   in
   	if x = [] then []
   	else mod_b (aux(mod_b x m, 0)) m
-
+*)
 
 (** Fast modular exponentiation function mod prime. Logarithmic complexity.
     It makes use of the Little Fermat Theorem.
