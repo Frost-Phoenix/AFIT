@@ -319,7 +319,9 @@ let quot_n_tests () =
 			((from_int_n 27, from_int_n 3), from_int_n 9) ; 
 			((from_int_n 1245, from_int_n 5), from_int_n 249) ; 
 			((from_int_n 2093858594, from_int_n 23525), from_int_n 89005) ; 
-	 (* ((from_int_n 239859843562, from_int_n 2323), from_int_n 103254345) ; *)
+	    ((from_int_n 239859843, from_int_n 2323), from_int_n 103254) ; 
+	 	  ((from_int_n 98598435, from_int_n 2323), from_int_n 42444) ; 
+
     ]
     and do_check ((nA, nB), expected) =
         check (list int) (print_bA "quot_n_tests: " nA ^ print_bA " ; " nB) expected (quot_n nA nB)
@@ -334,7 +336,7 @@ let quot_b_tests () =
 			((from_int 27, from_int 3), from_int 9) ; 
 			((from_int 1245, from_int 5), from_int 249) ; 
 			((from_int 2093858594, from_int 23525), from_int 89005) ; 
-	 (* ((from_int_n 239859843562, from_int_n 2323), from_int_n 103254345) ; *)
+	    ((from_int 98598435, from_int 2323), from_int 42444) ; 
 			((from_int (-10), from_int 3), from_int (-4)) ; 
 			((from_int (-10), from_int 2), from_int (-5)) ; 
 			((from_int 10, from_int (-3)), from_int (-4)) ; 
@@ -353,6 +355,7 @@ let mod_b_tests () =
 			((from_int 13, from_int 5), from_int 3) ; 
 			((from_int 27, from_int 3), from_int 0) ; 
 			((from_int 1245, from_int 5), from_int 0) ; 
+			((from_int 321245432, from_int 43), from_int 0) ; 
 			((from_int (-10), from_int 3), from_int 2) ; 
 			((from_int (-10), from_int 2), from_int 0) ; 
     ]

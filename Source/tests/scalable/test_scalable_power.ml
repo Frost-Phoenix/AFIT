@@ -31,9 +31,9 @@ let power_tests () =
     let cases = [(([1;1], [0;0;0;1;1]), [0;1]);
                  (([1;1], [0;1;1;0;1]), [1;1]);
                  ((from_int 0,    [0;0;1]),  from_int 0);
-                 (* ((from_int 13,    from_int 8),  from_int 815730721); *)
-                 ((from_int 243,    from_int 4),  from_int 3486784401);
-                 ((from_int 54,    from_int 4),  from_int 8503056);
+                 ((from_int 13,    from_int 8),  from_int 815730721); 
+                 ((from_int 243,    from_int 4),  from_int 3486784401); 
+                 ((from_int 54,    from_int 4),  from_int 8503056); 
                  (([0;1;1],    [0;1]),  [0;1;1]);
                  (([0;1;0;1],    from_int 0),  [0;1]);
                  (([1;0;1], [0;0;1]),  [0;0;0;1]);
@@ -59,7 +59,15 @@ let mod_power_tests () =
                   (([1;0;1], [0;0;1],  [0;1;0;1]),  [0;0;0;1]);
                   (([1;0;1], [0;1;1],  from_int 9),  [0;1]);
                   (([0;0;1],    [0;1;0;1],  [0;1;0;0;0;1]), [0;1;1;1;1]);
-                  (([0;1;1],    [0;1;1],  [0;1;0;0;0;1]), [0;0;1;0;1])]
+                  (([0;1;1],    [0;1;1],  [0;1;0;0;0;1]), [0;0;1;0;1]);
+                  ((from_int 0, from_int 0, from_int 1),  from_int 0);
+                  ((from_int 123, from_int 0, from_int 1),  from_int 0);
+                  ((from_int 123, from_int 9384759, from_int 5435),  from_int 1267);
+                  ((from_int (-4), from_int (4), from_int 54),  from_int 40);
+                  ((from_int (-44), from_int 4344, from_int 12),  from_int 4);
+                  ((from_int 7, from_int 3, from_int 55), from_int 13); 
+                  ((from_int 281237, from_int 36199003, from_int 99400891), from_int 70133953);
+                  ((from_int 281237, from_int 36199003432, from_int 435), from_int 16)]
     and do_check ((x, n, m), expected) =
         check
             (list int)
