@@ -414,6 +414,7 @@ let mult_b bA bB =
     @param bA Bitarray you want to divide by second argument.
     @param bB Bitarray you divide by. Non-zero!
 *)
+(*
 let quot_n nA nB = 
 	let rec aux res = function
 		| (_, []) -> failwith "quot_n: error division by zero"
@@ -421,6 +422,20 @@ let quot_n nA nB =
 		| (l1, l2) when l1 <<! l2 -> res
 		| (l1, l2) -> aux (add_n res [1]) ((diff_n l1 l2), l2)
 	in aux [] (nA, nB)
+*)
+let quot_n nA nB =
+  let n = (l_len nA) - (l_len nB) in 
+    let rec aux res = function
+      | [], _, (-1) -> trim_0(res)
+      | _, _, (-1) -> trim_0(res)
+      | l1, l2, c -> 
+          if (l1 >>= l2) then aux (1::res) ((diff_b l1 l2), (shift_r l2 1), (c-1))
+          else aux (0::res) (l1, (shift_r l2 1), (c-1))
+  in match nA, nB with 
+    | [], _ -> []
+    | nA, nB when nA <<! nB -> []
+    | nA, nB -> aux [] ((0::0::nA), (0::(shift (0::nB) n)), n)
+
 		
 (** Quotient of two bitarrays.
     @param bA Bitarray you want to divide by second argument.

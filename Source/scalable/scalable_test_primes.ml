@@ -17,7 +17,7 @@ let is_prime n =
  *)
 let is_pseudo_prime p test_seq =
   let rec aux = function 
-    | [] -> true
-    | e::q -> (mod_power e p p) = (mod_b e p) && aux q
+    | [] -> true 
+    | e::q -> (mod_power e p p) = (mod_b e p) && aux q 
   in aux test_seq 
 
