@@ -32,17 +32,17 @@ let power x n =
     @param n exponent, a non-negative bitarray
     @param m modular base, a positive bitarray
  *)
-let mod_power x n m = 
-	let rec aux = function 
-    | _, e when (shift [0;1] e) >> n -> [0;1]
-    | a, e ->
-      let keep = and_b (shift_r n e) [0;1] = [0;1]
-      and nb = mod_b (mult_b a a) m in
-        if keep then mod_b (mult_b a (aux(nb, e+1))) m
-        else mod_b (aux(nb, e+1)) m
-  in
-  	if x = [] then []
-  	else mod_b (aux(mod_b x m, 0)) m
+let mod_power x n m = []
+	(* let rec aux = function *)
+    (* | _, e when (shift [0;1] e) >> n -> [0;1] *)
+    (* | a, e -> *)
+      (* let keep = and_b (shift_r n e) [0;1] = [0;1] *)
+      (* and nb = mod_b (mult_b a a) m in *)
+        (* if keep then mod_b (mult_b a (aux(nb, e+1))) m *)
+        (* else mod_b (aux(nb, e+1)) m *)
+  (* in *)
+  	(* if x = [] then [] *)
+  	(* else mod_b (aux(mod_b x m, 0)) m *)
 
 
 (** Fast modular exponentiation function mod prime. Logarithmic complexity.
