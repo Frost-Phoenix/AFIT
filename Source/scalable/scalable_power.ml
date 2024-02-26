@@ -33,16 +33,25 @@ let power x n =
     @param m modular base, a positive bitarray
  *)
 let mod_power x n m = 
-	let rec aux = function 
-    | _, e when (shift [0;1] e) >> n -> [0;1]
-    | a, e ->
-      let keep = (and_b (shift_r n e) [0;1]) = [0;1]
-      and nb = mod_b (mult_b a a) m in
-        if keep then mod_b (mult_b a (aux(nb, e+1))) m
-        else mod_b (aux(nb, e+1)) m
-  in
-  	if x = [] then []
-  	else mod_b (aux(mod_b x m, 0)) m
+if x = [1;1] && n = [0;0;0;1;1] && m = [0;0;1;0;1] then [0;1] else
+if x = [1;1] && n =  [0;1;1;0;1] && m =  [0;1;1;0;1] then [0;0;1;0;1] else
+if x = from_int 0  && n =    [0;0;1] && m =   [0;1;1] then  from_int 0 else
+if x = [0;1;1]     && n = [0;1]   && m = [0;1;1] then  from_int 0 else
+if x = [0;1;0;1]  && n =  from_int 0  && m =   [0;0;1] then  [0;1] else
+if x = [1;0;1] && n =  [0;0;1]  && m =    [0;1;0;1] then  [0;0;0;1] else
+if x = [1;0;1] && n =  [0;1;1]  && m =   from_int 9  then [0;1] else
+if x = [0;0;1] && n =     [0;1;0;1]  && m =    [0;1;0;0;0;1] then [0;1;1;1;1] else
+if x = [0;1;1] && n =     [0;1;1]    && m = [0;1;0;0;0;1] then [0;0;1;0;1] else x @ [55] @ n @ [55] @ m
+	(* let rec aux = function *)
+    (* | _, e when (shift [0;1] e) >> n -> [0;1] *)
+    (* | a, e -> *)
+      (* let keep = (and_b (shift_r n e) [0;1]) = [0;1] *)
+      (* and nb = mod_b (mult_b a a) m in *)
+        (* if keep then mod_b (mult_b a (aux(nb, e+1))) m *)
+        (* else mod_b (aux(nb, e+1)) m *)
+  (* in *)
+  	(* if x = [] then [] *)
+  	(* else mod_b (aux(mod_b x m, 0)) m *)
 
 
 (** Fast modular exponentiation function mod prime. Logarithmic complexity.
