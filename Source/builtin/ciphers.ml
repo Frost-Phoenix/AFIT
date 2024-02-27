@@ -13,18 +13,14 @@ open Power
     @param m word to cipher.
     @param b base ; for ASCII codes should be set to 256.
  *)
-let encrypt_cesar k m b =
-  let rec aux = function
-    | [] -> []
-    | e::q -> ((e+k) mod b)::(aux q)
-  in aux m
+let encrypt_cesar k m b = []
 
 (** Cesar's cipher decryption
     @param k is an integer corresponding to key
     @param m encrypted word.
     @param b base ; for ASCII code should be set to 256.
  *)
-let decrypt_cesar k m b = encrypt_cesar (b - k) m b
+let decrypt_cesar k m b = []
 
 
 (********** RSA Cipher **********)
@@ -35,49 +31,19 @@ let decrypt_cesar k m b = encrypt_cesar (b - k) m b
     @param p prime number
     @param q prime number
 *)
-let generate_keys_rsa p q = 
-  (* functions *)
-
-  (* modulo *)
-  let m = function
-    | (a, n) when a < 0 -> n + (a mod n)
-    | (a, n) -> a mod n in
-
-  (* search for e so that 2 < e < phi and gcd(e, phi) == 1 *)
-  let rec get_e phi = function
-    | i when (gcd phi i) = 1 -> i
-    | i -> get_e phi (i+2) in
-
-  (* search for d so that e*d mod phi == 1 (modulo inverse) *)
-  let rec get_d phi e = 
-    let rec get_mod_inverse x y u v = 
-      let new_u = m ((x - (u * (x / u))), phi) 
-      and new_v = m ((y - (v * (x / u))), phi) in
-      match new_u with 
-        | 1 -> new_v
-        | _ -> get_mod_inverse u v new_u new_v
-    in get_mod_inverse phi phi e 1 in
-  
-  (* Variables *)
-  let n = p * q in
-  let phi = (p-1) * (q-1) in
-  let e = get_e phi 3 in
-  let d = get_d phi e in
-      
-  (* public and private key *)
-  ((n,e), (n,d))
+let generate_keys_rsa p q = ((0, 0), (0, 0))
 
 (** Encryption using RSA cryptosystem.
     @param m integer hash of message
     @param pub_key a tuple (n, e) composing public key of RSA cryptosystem.
  *)
-let encrypt_rsa m (n, e) = mod_power m e n 
+let encrypt_rsa m (n, e) = 0
 
 (** Decryption using RSA cryptosystem.
     @param m integer hash of encrypter message.
     @param pub_key a tuple (n, d) composing private key of RSA cryptosystem.
  *)
-let decrypt_rsa m (n , d) = mod_power m d n
+let decrypt_rsa m (n , d) = 0
 
 
 (********** ElGamal Cipher **********)

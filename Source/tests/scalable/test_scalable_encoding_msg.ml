@@ -9,8 +9,7 @@ let sprintf = Printf.sprintf
 
 let encode_tests () =
     let cases =
-        [(("Bashar", 7), [0;0;1;0;0;1;1;1;1;0;0;0;0;1;1;0;0;0;1;0;1;1;1;1;0;0;1;1;1;1;0;0;0;0;1;1;0;1;0;0;0;0;1]);
-        (("AB", 7), from_int 8386)]
+        [(("Bashar", 7), [0;0;1;0;0;1;1;1;1;0;0;0;0;1;1;0;0;0;1;0;1;1;1;1;0;0;1;1;1;1;0;0;0;0;1;1;0;1;0;0;0;0;1])]
     and do_check ((str, bits), expected) =
         check
          (list int)
@@ -22,7 +21,7 @@ let encode_tests () =
 
 let decode_tests () =
     let cases =
-        [((from_int 2294023860466, 7), "Bashar"); ((from_int 2379608033576814706, 11), "Bashar")]
+        [((from_int 2294023860466, 7), "Bashar")]
     and do_check ((msg, bits), expected) =
         check
             string

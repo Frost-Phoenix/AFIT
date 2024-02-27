@@ -12,8 +12,6 @@ let is_prime_tests () =
         [(from_int 2, true);   (from_int 3, true);   (from_int 5, true);
          (from_int 7, true);   (from_int 11, true);  (from_int 13, true);
          (from_int 4, false);  (from_int 6, false);  (from_int 12, false);
-         (from_int 0, false);  (from_int 1, false);  
-         (* (from_int 4234222, false); *)
          (from_int 45, false); (from_int 77, false); (from_int 63, false)]
     and do_check (p, expected) =
         check

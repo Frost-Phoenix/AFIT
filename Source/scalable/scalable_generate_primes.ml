@@ -6,32 +6,13 @@ open Scalable_basic_arithmetics
 (** List composed of 2 and then odd bitarrays starting at 3.
     @param n upper bound to elements in the list of bitarrays.
  *)
-let init_eratosthenes n = 
-  let rec aux = function
-    | i when i >> n -> []
-    | i when i = n -> [i]
-    | i -> i::(aux (add_b i [0;0;1]))
-  in match n with
-  	| [] | [0;1] -> []
-    | [0;0;1] -> [[0;0;1]]
-    | _ -> ([0;0;1])::(aux (from_int 3))
+let init_eratosthenes n = []
 
 (** Eratosthene sieve.
     @param n upper bound to elements in the list of primes, starting
            at 2.
 *)
-let eratosthenes n =
-  let l = init_eratosthenes n 
-  in let rec remove_multiples nb = function
-    | [] -> []
-    | e::q -> 
-      if mod_b e nb = [] then remove_multiples nb q
-      else e::(remove_multiples nb q)
-  in let rec aux = function
-    | [] -> []
-    | e::q -> e::(aux (remove_multiples e q))
-  in aux l
-
+let eratosthenes n = []
 
 (** Write a list into a file. Element seperator is newline. Inner
    seperator within elements of an element is ','.
@@ -83,26 +64,10 @@ let rec last_two l = match l with
     first plus 1.
     @param upper bound for searched for prime bitarrays, a built-in integer.
     @param isprime function testing for (pseudo)primality.  *)
-let double_primes limit isprime = 
-  let rec aux = function
-    | i when i >> limit -> []
-    | i -> let d = add_b (mult_b i [0;0;1]) [0;1] in
-      if (isprime i) && (isprime d) then (i,d)::(aux (add_b i [0;0;1]))
-      else aux (add_b i [0;0;1])
-  in match limit with
-    | n when n << (from_int 5) -> []
-    | n -> (from_int 2, from_int 5)::(aux (from_int 3))
-
+let double_primes limit isprime = []
 
 (** Finding twin primes.
     @param upper bound for searched for prime bitarrays, a built-in integer..
     @param isprime function testing for (pseudo)primality.
  *)
-let twin_primes limit isprime = 
-  let rec aux = function
-    | i when i >> limit -> []
-    | i -> let d = add_b i [0;0;1] in
-      if (isprime i) && (isprime d) then (i,d)::(aux (add_b i [0;0;1]))
-      else aux (add_b i [0;0;1])
-  in (aux (from_int 3))
-
+let twin_primes limit isprime = []

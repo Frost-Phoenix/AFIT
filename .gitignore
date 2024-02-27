@@ -30,12 +30,3 @@ _opam/
 # Log files
 *.log
 *.cache
-
-# vscodium config
-.vscode
-
-# test folder
-test
-
-*.txt
-default.nix
