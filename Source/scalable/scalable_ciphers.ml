@@ -6,19 +6,6 @@ open Scalable
 open Scalable_basic_arithmetics
 open Scalable_power
 
-let rec shift_r bA d = 
-    let rec aux = function
-      | [], _ -> []
-      | l, 0  -> l
-      | _::q, n -> aux (q, (n-1))
-      in match bA with 
-      | [] -> []
-      | b::q -> 
-          let res = match aux (q, d) with
-              | [] -> []
-              | l -> b::l
-          in res
-
 (********** RSA Cipher **********)
 
 (** Generate an RSA ciphering key.
@@ -33,7 +20,7 @@ let generate_keys_rsa p q = (([],[]), ([], []))
     @param m bitarray hash of message
     @param pub_key a tuple (n, e) composing public key of RSA cryptosystem.
  *)
-let encrypt_rsa m (n, e) = shift_r (from_int 1024) 8
+let encrypt_rsa m (n, e) = []
 
 (** Decryption using RSA cryptosystem.
     @param m bitarray hash of encrypted message.
