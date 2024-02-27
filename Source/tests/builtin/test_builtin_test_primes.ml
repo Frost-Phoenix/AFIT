@@ -10,7 +10,8 @@ let is_prime_tests () =
     let cases = [(2, true  ); (3, true  ); (5, true);
                  (7, true  ); (11, true ); (13, true);
                  (4, false ); (6, false ); (12, false);
-                 (45, false); (77, false); (63, false)]
+                 (45, false); (77, false); (63, false);
+                 (5687, false); (8535, false)]
     and do_check (p, expected) =
         check bool (sprintf "is_prime: %i" p) expected (is_prime p)
     in
@@ -20,7 +21,9 @@ let is_pseudo_prime_tests () =
     let cases = [((2,  [2; 4; 8; 12]),   true); ((11, [2; 4; 5; 20]), true);
                  ((23, [2; 9; 15; 18]),  true); ((29, [30; 41; 52]),  true);
                  ((4,  [2; 9; 15; 18]), false); ((22, [30; 41; 52]), false);
-                 ((15, [2; 9; 15; 18]), false); ((27, [30; 41; 52]), false)]
+                 ((15, [2; 9; 15; 18]), false); ((27, [30; 41; 52]), false);
+                 ((120, [2; 3; 5; 7; 11; 13; 17; 19; 23; 29; 31; 37; 41; 43; 47; 53; 
+                 59; 61; 67; 71; 73; 79; 83; 89; 97; 101; 103; 107; 109; 112; 113]),false)]
     and do_check ((p, test_seq), expected) =
         check
             bool

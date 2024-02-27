@@ -6,14 +6,14 @@ open Encoding_msg
 let sprintf = Printf.sprintf
 
 let encode_tests () =
-    let cases = [(("Bashar", 7), 2294023860466)]
+    let cases = [(("Bashar", 7), 2294023860466); (("AFIT", 7), 137471188)]
     and do_check ((str, bits), expected) =
         check int (sprintf "encode: \"%s\" on %i bits" str bits) expected (encode str bits)
     in
     List.iter do_check cases
 
 let decode_tests () =
-    let cases = [((2294023860466, 7), "Bashar")]
+    let cases = [((2294023860466, 7), "Bashar"); ((137471188, 7), "AFIT")]
     and do_check ((msg, bits), expected) =
         check string (sprintf "decode: %i on %i bits" msg bits) expected (decode msg bits)
     in

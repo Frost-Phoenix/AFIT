@@ -54,7 +54,7 @@ let decrypt_cesar_tests () =
     List.iter do_check cases
 
 let generate_keys_rsa_tests () =
-    let cases = [((9967, 9973), true)]
+    let cases = [((9967, 9973), true); ((10007,9277), true)]
     and do_check ((p, q), expected) =
         (* Here, `expected` is a boolean telling if the generated `e` and `d`
          * are the inverse of each other modulo `n` *)
@@ -70,14 +70,14 @@ let generate_keys_rsa_tests () =
     List.iter do_check cases
 
 let encrypt_rsa_tests () =
-    let cases = [((281237, (99400891, 36199003)), 70133953)]
+    let cases = [((281237, (99400891, 36199003)), 70133953); ((281237, (92834939,9163921)), 37302916)]
     and do_check ((m, (n, e)), expected) =
         check int (sprintf "encrypt_rsa: %i with n=%i and e=%i" m n e) expected (encrypt_rsa m (n, e))
     in
     List.iter do_check cases
 
 let decrypt_rsa_tests () =
-    let cases = [((70133953, (99400891, 30869683)), 281237)]
+    let cases = [((70133953, (99400891, 30869683)), 281237); ((37302916,(92834939,83174929)),281237)]
     and do_check ((m, (n, e)), expected) =
         check int (sprintf "decrypt_rsa: %i with n=%i and e=%i" m n e) expected (decrypt_rsa m (n, e))
     in
