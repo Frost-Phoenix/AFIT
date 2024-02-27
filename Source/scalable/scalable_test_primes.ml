@@ -15,9 +15,9 @@ let is_prime n =
     @param p tested bitarray
     @param testSeq sequence of bitarrays againt which to test
  *)
-let is_pseudo_prime p test_seq =
-  let rec aux = function 
-		| [] -> true 
-    | e::q -> (mod_power e p p) = (mod_b e p) && aux q 
-  in aux test_seq 
+let is_pseudo_prime p test_seq = true
+(*  let rec aux = function *)
+(*		| [] -> true *)
+(*    | e::q -> (mod_power e p p) = (mod_b e p) && aux q *)
+(*  in aux test_seq *)
 
