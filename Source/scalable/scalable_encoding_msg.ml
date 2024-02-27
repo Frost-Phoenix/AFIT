@@ -25,12 +25,13 @@ let encode str bits =
     @param bits number of bits on which to store a character ;
            alphanumeric ASCII is 7.
  *)
- let decode msg bits = 
-  let rec aux = function 
+ let decode msg bits = ""
+(*  let rec aux = function 
     | n when shift_r msg (n * bits) = [] -> ""
     | n -> 
       let shift_m = (shift_r msg (n * bits)) in
-      let nb = and_b shift_m (from_int ((1 lsl bits) - 1)) in    (* 2^bits - 1 *)
+      let nb = and_b shift_m (from_int ((1 lsl bits) - 1)) in   
       let c = String.make 1 (Char.chr (to_int nb)) in
       (aux (n + 1)) ^ c
   in aux 0
+*)

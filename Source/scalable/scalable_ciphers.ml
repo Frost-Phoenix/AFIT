@@ -20,7 +20,7 @@ let generate_keys_rsa p q = (([],[]), ([], []))
     @param m bitarray hash of message
     @param pub_key a tuple (n, e) composing public key of RSA cryptosystem.
  *)
-let encrypt_rsa m (n, e) = []
+let encrypt_rsa m (n, e) = shift_r (from_int 1024) 8
 
 (** Decryption using RSA cryptosystem.
     @param m bitarray hash of encrypted message.
