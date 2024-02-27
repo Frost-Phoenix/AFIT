@@ -19,6 +19,8 @@ decomposition of a non-negative integer.
 *)
 val from_int : int -> int list
 
+val from_int_n : int -> int list
+
 (** Transforms bitarray of built-in size to built-in integer.
     UNSAFE: possible integer overflow.
     @param bA bitarray object.
@@ -35,6 +37,12 @@ val print_b : int list -> unit
     assumed to be non-negative.
 *)
 
+
+val reverse : 'a list -> 'a list
+
+val l_len : 'a list -> int
+
+val trim_0 : int list -> int list
 
 (** Comparing naturals. Output is 1 if first argument is bigger than
     second -1 if it is smaller and 0 in case of equality.
@@ -147,17 +155,41 @@ val add_b : int list -> int list -> int list
 *)
 val diff_b : int list -> int list -> int list
 
+(** Shifts natural to the left by a given natural number.
+    @param nA natural.
+    @param d Non-negative integer.
+*)
+val shift_n : int list -> int -> int list
+
 (** Shifts bitarray to the left by a given natural number.
     @param bA Bitarray.
     @param d Non-negative integer.
 *)
 val shift : int list -> int -> int list
 
+(** Shifts bitarray to the right by a given natural number.
+    @param bA Bitarray.
+    @param d Non-negative integer.
+*)
+val shift_r : int list -> int -> int list
+
+(** Multiplication of two naturals.
+    @param nA natural.
+    @param nB natural.
+*)
+val mult_n : int list -> int list -> int list
+
 (** Multiplication of two bitarrays.
     @param bA Bitarray.
     @param bB Bitarray.
 *)
 val mult_b : int list -> int list -> int list
+
+(** Quotient of two bitarrays.
+    @param bA Bitarray you want to divide by second argument.
+    @param bB Bitarray you divide by. Non-zero!
+*)
+val quot_n : int list -> int list -> int list
 
 (** Quotient of two bitarrays.
     @param bA Bitarray you want to divide by second argument.
@@ -176,3 +208,10 @@ val mod_b : int list -> int list -> int list
     @param bB Bitarray you wnat to divide by.
 *)
 val div_b : int list -> int list -> (int list * int list)
+
+
+(** Logical and of two bitarrays.
+    @param bA Bitarray.
+    @param bB Bitarray.
+*)
+val and_b : int list -> int list -> int list
