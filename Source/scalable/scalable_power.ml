@@ -3,6 +3,39 @@
 open Scalable
 open Scalable_basic_arithmetics
 
+(** Shifts bitarray to the right by a given natural number.
+    @param bA Bitarray.
+    @param d Non-negative integer.
+*)
+let rec shift_r bA d = 
+  let rec aux = function
+    | [], _ -> []
+    | l, 0  -> l
+    | _::q, n -> aux (q, (n-1))
+    in match bA with 
+    | [] -> []
+    | b::q -> 
+        let res = match aux (q, d) with
+            | [] -> []
+            | l -> b::l
+        in res
+
+
+(** Logical and of two bitarrays.
+    @param bA Bitarray.
+    @param bB Bitarray.
+*)
+let and_b bA bB = 
+    let rec aux = function 
+        | [], _ -> []
+        | _, [] -> []
+        | x1::q1, x2::q2 -> (x1 land x2)::(aux (q1, q2))
+    in match (bA, bB) with 
+        | [], _ -> []
+        | _, [] -> []
+        | _::q1, _::q2 ->
+            if q1 >>= q2 then 0::(aux (q1, q2))
+            else 0::(aux (q2, q1))
 
 (** Naive power function. Linear complexity
     @param x base, a bitarray
@@ -33,17 +66,17 @@ let power x n =
     @param n exponent, a non-negative bitarray
     @param m modular base, a positive bitarray
  *)
-let mod_power x n m = []
-(*  let rec aux = function *)
-(*		| _, e when (shift [0;1] e) >> n -> [0;1] *)
-(*    | a, e -> *)
-(*      let keep = (and_b (shift_r n e) [0;1]) = [0;1] *)
-(*      and nb = mod_b (mult_b a a) m in *)
-(*        if keep then mod_b (mult_b a (aux(nb, e+1))) m *)
-(*        else mod_b (aux(nb, e+1)) m *)
-(*   in *)
-(* 	  if x = [] then [] *)
-(* 	  else mod_b (aux(mod_b x m, 0)) m *)
+let mod_power x n m =
+  let rec aux = function 
+    | _, e when (shift [0;1] e) >> n -> [0;1] 
+    | a, e -> 
+      let keep = (and_b (shift_r n e) [0;1]) = [0;1] 
+      and nb = mod_b (mult_b a a) m in 
+      if keep then mod_b (mult_b a (aux(nb, e+1))) m 
+      else mod_b (aux(nb, e+1)) m 
+  in 
+    if x = [] then [] 
+    else mod_b (aux(mod_b x m, 0)) m 
 
 
 (** Fast modular exponentiation function mod prime. Logarithmic complexity.
