@@ -30,3 +30,7 @@ _opam/
 # Log files
 *.log
 *.cache
+
+.vscode
+test
+default.nix
