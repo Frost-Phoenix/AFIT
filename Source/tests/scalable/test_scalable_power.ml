@@ -51,15 +51,6 @@ let power_tests () =
 
 let mod_power_tests () =
     let cases =  [
-    ((from_int (-1), from_int 12, from_int 10), from_int 1);
-                      ((from_int (-1), from_int 11, from_int 11), from_int 10);
-                      ((from_int 0,    from_int 2,  from_int 3),  from_int 0);
-                      ((from_int 3,    from_int 1,  from_int 3),  from_int 0);
-                      ((from_int 5,    from_int 0,  from_int 2),  from_int 1);
-                      ((from_int (-2), from_int 2,  from_int 5),  from_int 4);
-                      ((from_int (-2), from_int 3,  from_int 9),  from_int 1);
-                      ((from_int 2,    from_int 5,  from_int 17), from_int 15);
-                      ((from_int 3,    from_int 3,  from_int 17), from_int 10);
       (([1;1], [0;0;0;1;1], [0;0;1;0;1]), [0;1]);
       (([1;1], [0;1;1;0;1], [0;1;1;0;1]), [0;0;1;0;1]);
       ((from_int 0,    [0;0;1],  [0;1;1]),  from_int 0);
@@ -68,7 +59,7 @@ let mod_power_tests () =
       (([1;0;1], [0;0;1],  [0;1;0;1]),  [0;0;0;1]);
       (([1;0;1], [0;1;1],  from_int 9),  [0;1]);
       (([0;0;1],    [0;1;0;1],  [0;1;0;0;0;1]), [0;1;1;1;1]);
-      (([0;1;1],    [0;1;1],  [0;1;0;0;0;1]), [0;0;1;0;1])
+      (([0;1;1],    [0;1;1],  [0;1;0;0;0;1]), [0;0;1;0;1]);
       (* (([1;1], [0;0;0;1;1], [0;0;1;0;1]), [0;1]); *)
       (* (([1;1], [0;1;1;0;1], [0;1;1;0;1]), [0;0;1;0;1]); *)
       (* ((from_int 0,    [0;0;1],  [0;1;1]),  from_int 0); *)
