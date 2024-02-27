@@ -6,6 +6,19 @@ open Scalable
 open Scalable_basic_arithmetics
 open Scalable_power
 
+let rec shift_r bA d = 
+    let rec aux = function
+      | [], _ -> []
+      | l, 0  -> l
+      | _::q, n -> aux (q, (n-1))
+      in match bA with 
+      | [] -> []
+      | b::q -> 
+          let res = match aux (q, d) with
+              | [] -> []
+              | l -> b::l
+          in res
+
 (********** RSA Cipher **********)
 
 (** Generate an RSA ciphering key.
