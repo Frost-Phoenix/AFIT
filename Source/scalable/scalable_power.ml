@@ -85,6 +85,6 @@ let mod_power x n m =
     @param n exponent, a non-negative bitarray
     @param p prime modular base, a positive bitarray
  *)
-let prime_mod_power x n p = []
-(*	let u = mod_b n (diff_b p [0;1]) *)
-(*  in mod_power x u p *)
+let prime_mod_power x n p = 
+	let u = mod_b n (diff_b p [0;1]) 
+  in mod_power x u p 
