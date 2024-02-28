@@ -16,11 +16,11 @@ let scalable_test_suite = [
 	("scalable",                    scalable_set); 
 	("scalable_basic_arithmetics",  basic_arithmetics_set);
 	("scalable_power",              power_set);
-	("scalable_encoding",           encoding_msg_set); 
 	("scalable_test_primes",        test_primes_set) ;
 	("scalable_generate_primes",    generate_primes_set) ;
-	("scalable_break_ciphers",      break_ciphers_set);
 	("scalable_ciphers",            ciphers_set); 
+	("scalable_break_ciphers",      break_ciphers_set);
+	("scalable_encoding",           encoding_msg_set); 
 ]
 
 (*
