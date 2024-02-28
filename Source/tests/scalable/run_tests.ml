@@ -20,9 +20,9 @@ let scalable_test_suite = [
 	("scalable_test_primes",        test_primes_set) ;
 	("scalable_generate_primes",    generate_primes_set) ;
 	("scalable_break_ciphers",      break_ciphers_set);
+	("scalable_ciphers",            ciphers_set); 
 ]
 
 (*
-	("scalable_ciphers",            ciphers_set); 
 *)
 let () = run_to_xml "trace_scalable_1.xml" [scalable_test_suite]
