@@ -11,7 +11,7 @@ open Z
     @param n exponent
     @param m modular base
  *)
-let mod_power x n m = zero
+let mod_power x n m = powm x n m
 
 (* Making use of Fermat Little Theorem for very quick exponentation
    modulo prime number.
@@ -23,4 +23,4 @@ let mod_power x n m = zero
     @param n exponent
     @param p prime modular base
  *)
-let prime_mod_power x n p = zero
+let prime_mod_power x n p = powm x n p

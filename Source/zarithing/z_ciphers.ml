@@ -13,19 +13,28 @@ open Z_power
     @param p prime number
     @param q prime number
 *)
-let generate_keys_rsa p q = ((zero, zero), (zero, zero))
+let generate_keys_rsa p q =
+  let rec get_e phi = function
+    | i when (gcd phi i) = one -> i
+    | i -> get_e phi (i + (of_int 2)) in
+  (* Variables *)
+  let n = p * q in
+  let phi = (p - (of_int 1)) * (q - (of_int 1)) in
+  let e = get_e phi (of_int 3) in
+  let d = invert e phi 
+  in ((n, e), (n, d))
 
 (** Encryption using RSA cryptosystem.
     @param m big integer hash of message
     @param pub_key a tuple (n, e) composing public key of RSA cryptosystem.
  *)
-let encrypt_rsa m (n, e) = zero
+let encrypt_rsa m (n, e) = powm m e n
 
 (** Decryption using RSA cryptosystem.
     @param m big integer hash of encrypter message.
     @param pub_key a tuple (n, d) composing private key of RSA cryptosystem.
  *)
-let decrypt_rsa m (n , d) = zero
+let decrypt_rsa m (n , d) = powm m d n
 
 (********** ElGamal Cipher **********)
 
