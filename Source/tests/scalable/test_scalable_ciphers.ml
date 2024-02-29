@@ -79,8 +79,9 @@ let el_gamal_tests () =
     in
     List.iter do_check cases
 
-let ciphers_set =
-    [("Generate RSA keys with bitarrays function", `Quick, generate_keys_rsa_tests);
-     ("RSA encryption with bitarrays function", `Quick, encrypt_rsa_tests);
-     ("RSA decryption with bitarrays function", `Quick, decrypt_rsa_tests);
-     ("El Gamal cryptosystem with bitarrays functions", `Quick, el_gamal_tests)]
+let ciphers_set = [
+	("Generate RSA keys with bitarrays function", `Quick, generate_keys_rsa_tests);
+  ("RSA encryption with bitarrays function", `Quick, encrypt_rsa_tests);
+	("RSA decryption with bitarrays function", `Quick, decrypt_rsa_tests);
+  ("El Gamal cryptosystem with bitarrays functions", `Quick, el_gamal_tests)
+]
