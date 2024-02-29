@@ -59,23 +59,34 @@ let decrypt_rsa m (n , d) = mod_power m d n
     where p is a prime bitarray and g a bitarray having high enough order modulo p.
     @param p is a prime bitarray having form 2*q + 1 for prime bitarray q.
  *)
-let rec public_data_g p = ([], [])
+let rec public_data_g p = 
+	match from_int (Random.int (to_int p)) with
+		| q when mod_b (mult_b q q) p <> [0;1] -> (p,q)
+		| _ -> public_data_g p
 
 (** Generate ElGamal public data.
     @param pub_data a tuple (g, p) of public data for ElGamal cryptosystem.
  *)
-let generate_keys_g (g, p) = ([], [])
+let generate_keys_g (g, p) =
+	let a = from_int (Random.int (to_int p)) in
+	let public_key = mod_power g a p
+	in (public_key, a)
 
 (** ElGamal encryption process.
     @param msg message to be encrypted.
     @param pub_data a tuple (g, p) of ElGamal public data.
     @param kA ElGamal public key.
  *)
-let encrypt_g msg (g, p) kA = ([], [])
+let encrypt_g msg (g, p) kA = 
+	let k = from_int (Random.int (to_int p)) in
+	let c1 = mod_power g k p in
+	let c2 = mult_b msg (mod_power kA k p)
+	in (c1, c2)
+
 
 (** ElGamal decryption process.
     @param msg a tuple (msgA, msgB) forming an encrypted ElGamal message.
     @param a private key
     @param pub_data a tuple (g, p) of public data for ElGamal cryptosystem.
  *)
-let decrypt_g (msgA, msgB) a (g, p) = []
+let decrypt_g (msgA, msgB) a (g, p) = mod_b (quot_b msgB (mod_power msgA a p)) p
