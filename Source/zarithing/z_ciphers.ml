@@ -42,23 +42,34 @@ let decrypt_rsa m (n , d) = powm m d n
     where p is prime and g primitive root in F_p.
     @param p is prime having form 2*q + 1 for prime q.
  *)
-let rec public_data_g p = (zero, zero)
+let rec public_data_g p = 
+  match of_int (Random.int (to_int p)) with
+		| q when q*q mod p <> one -> (p,q)
+		| _ -> public_data_g p
+	
 
 (** Generate ElGamal public and private keys.
     @param pub_data a tuple (g, p) of public data for ElGamal cryptosystem.
  *)
-let generate_keys_g (g, p) = (zero, zero)
+let generate_keys_g (g, p) = 
+  let a = of_int (Random.int (to_int p)) in
+	let public_key = powm g a p
+	in (public_key, a)
 
 (** ElGamal encryption process.
     @param msg message to be encrypted.
     @param pub_data a tuple (g, p) of ElGamal public data.
     @param kA ElGamal public key.
  *)
-let encrypt_g msg (g, p) kA = (zero, zero)
+let encrypt_g msg (g, p) kA = 
+  let k = of_int (Random.int (to_int p)) in
+	let c1 = powm g k p in
+	let c2 = msg * (powm kA k p)
+	in (c1, c2)
 
 (** ElGamal decryption process.
     @param msg a tuple (msgA, msgB) forming an encrypted ElGamal message.
     @param a private key
     @param pub_data a tuple (g, p) of public data for ElGamal cryptosystem.
  *)
-let decrypt_g (msgA, msgB) a (g, p) = zero
+let decrypt_g (msgA, msgB) a (g, p) = msgB / (powm msgA a p) mod p

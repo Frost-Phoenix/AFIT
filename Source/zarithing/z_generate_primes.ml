@@ -10,14 +10,32 @@ open Z
 (** List composed of 2 and then odd integers starting at 3.
     @param n upper limit of elements in the list of big integers.
  *)
-let init_eratosthenes n = []
+let init_eratosthenes n = 
+  let rec aux = function
+    | i when i > n -> []
+    | i when i = n -> [i]
+    | i -> i::(aux (i + (of_int 2)))
+  in match n with
+    | n when n = (of_int 2) -> [of_int 2]
+    | _ -> (of_int 2)::(aux (of_int 3))
+
 
 (* Eratosthenes sieve. *)
 
 (** Eratosthene sieve.
     @param n limit of list of primes, starting at 2.
 *)
-let eratosthenes n = []
+let eratosthenes n = 
+  let l = init_eratosthenes n 
+  in let rec remove_multiples nb = function
+    | [] -> []
+    | e::q -> 
+      if e mod nb = zero then remove_multiples nb q
+      else e::(remove_multiples nb q)
+  in let rec aux = function
+    | [] -> []
+    | e::q -> e::(aux (remove_multiples e q))
+  in aux l
 
 (* Write and read into file functions for lists. *)
 
@@ -78,4 +96,13 @@ let rec last_two l = match l with
     @param limit positive big integer bounding searched for primes.
     @param isprime function testing for (pseudo)primality.
  *)
-let double_primes limit isprime = []
+let double_primes limit isprime =
+  let rec aux = function
+    | i when i > limit -> []
+    | i -> let d = (i * (of_int 2)) + one in
+      if (isprime i) && (isprime d) then (i,d)::(aux (i + (of_int 2)))
+      else aux (i + (of_int 2))
+  in match limit with
+    | n when n < (of_int 5) -> []
+    | n -> ((of_int 2),(of_int 5))::(aux (of_int 3))
+
